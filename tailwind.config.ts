@@ -74,6 +74,9 @@ export default {
 			fontFamily: {
 				serif: ['Playfair Display', 'serif'],
 				sans: ['Inter', 'sans-serif'],
+				display: ['Cinzel', 'serif'],
+				handwritten: ['Courgette', 'cursive'],
+				fantasy: ['MedievalSharp', 'fantasy'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -124,6 +127,15 @@ export default {
 						opacity: '0',
 						transform: 'scale(0.5) rotate(180deg)'
 					}
+				},
+				'magical-spin': {
+					'0%': { transform: 'rotate(0deg)' },
+					'100%': { transform: 'rotate(360deg)' }
+				},
+				'magical-appear': {
+					'0%': { transform: 'scale(0)', opacity: '0' },
+					'50%': { transform: 'scale(1.1)', opacity: '0.7' },
+					'100%': { transform: 'scale(1)', opacity: '1' }
 				}
 			},
 			animation: {
@@ -131,11 +143,15 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'float': 'float 6s ease-in-out infinite',
 				'glow': 'glow 2s ease-in-out infinite',
-				'sparkle': 'sparkle 2s ease-in-out infinite'
+				'sparkle': 'sparkle 2s ease-in-out infinite',
+				'magical-spin': 'magical-spin 10s linear infinite',
+				'magical-appear': 'magical-appear 0.6s ease-out forwards'
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
 				'magic-gradient': 'linear-gradient(90deg, hsla(277, 75%, 84%, 1) 0%, hsla(297, 50%, 51%, 1) 100%)',
+				'gold-gradient': 'linear-gradient(45deg, #FFD700, #FFA500, #FFD700)',
+				'mystic-gradient': 'linear-gradient(to right, #7E69AB, #0EA5E9, #FEC6A1)',
 			}
 		}
 	},
