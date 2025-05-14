@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { 
+import {
   Carousel,
   CarouselContent,
   CarouselItem,
@@ -10,43 +10,44 @@ import {
   CarouselPrevious
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
-import { Palette, Coins, Pencil, Tent, Package, Users } from "lucide-react";
+import { Palette, Coins, Pencil, Tent, Package, Users } from "lucide-react"; // Assuming these icons are still used in DomainCard
 
-const FeatureCard = ({ 
-  title, 
-  description, 
+// Component for the Feature Cards (used in "Ignite Your Imagination" section)
+const FeatureCard = ({
+  title,
+  description,
   icon: Icon,
   linkText,
   linkTo
-}: { 
-  title: string; 
-  description: string; 
+}: {
+  title: string;
+  description: string;
   icon: React.ComponentType<any>;
   linkText: string;
   linkTo: string;
 }) => {
   return (
-    <Card className="bg-card/50 backdrop-blur-sm border-white/10 overflow-hidden">
+    <Card className="bg-card/50 backdrop-blur-sm border-white/10 overflow-hidden rounded-lg shadow-lg">
       <CardContent className="p-6">
         <div className="h-12 w-12 rounded-full bg-primary/20 flex items-center justify-center mb-4">
           <Icon className="h-6 w-6 text-primary" />
         </div>
         <h3 className="text-xl font-serif mb-2">{title}</h3>
         <p className="text-muted-foreground mb-4">{description}</p>
-        <Link 
-          to={linkTo} 
+        <Link
+          to={linkTo}
           className="text-accent inline-flex items-center group"
         >
           {linkText}
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            width="16" 
-            height="16" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="2" 
-            strokeLinecap="round" 
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
             strokeLinejoin="round"
             className="ml-1 transition-transform group-hover:translate-x-1"
           >
@@ -58,38 +59,50 @@ const FeatureCard = ({
   );
 };
 
+// Component for the Upcoming Event card
 const UpcomingEvent = () => {
+  // Placeholder data for the upcoming event
+  const event = {
+    title: "Creative Writing Workshop",
+    date: "May 15, 2023", // Consider updating the year if needed
+    time: "6:00 PM",
+    description: "Join us for a magical journey into the world of creative writing. Learn techniques to craft compelling stories.",
+    link: "/events/creative-writing" // Link to the event details page
+  };
+
   return (
-    <div className="rounded-xl p-1 magic-border">
+    <div className="rounded-xl p-1 magic-border"> {/* magic-border class likely provides a visual border */}
       <div className="bg-card/90 backdrop-blur-sm rounded-lg p-6">
         <div className="mb-4">
           <span className="text-accent text-sm font-medium">UPCOMING EVENT</span>
         </div>
-        <h3 className="text-2xl font-serif mb-2">Creative Writing Workshop</h3>
+        <h3 className="text-2xl font-serif mb-2">{event.title}</h3>
         <p className="text-muted-foreground mb-4">
-          Join us for a magical journey into the world of creative writing. Learn techniques to craft compelling stories.
+          {event.description}
         </p>
         <div className="flex items-center gap-4 text-sm mb-6">
           <div className="flex items-center">
+            {/* Calendar icon */}
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1 text-primary">
               <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
               <line x1="16" x2="16" y1="2" y2="6"></line>
               <line x1="8" x2="8" y1="2" y2="6"></line>
               <line x1="3" x2="21" y1="10" y2="10"></line>
             </svg>
-            <span>May 15, 2023</span>
+            <span>{event.date}</span>
           </div>
           <div className="flex items-center">
+            {/* Clock icon */}
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1 text-primary">
               <circle cx="12" cy="12" r="10"></circle>
               <polyline points="12 6 12 12 16 14"></polyline>
             </svg>
-            <span>6:00 PM</span>
+            <span>{event.time}</span>
           </div>
         </div>
         <div>
-          <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
-            <Link to="/events/creative-writing">Learn More</Link>
+          <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-md">
+            <Link to={event.link}>Learn More</Link>
           </Button>
         </div>
       </div>
@@ -97,9 +110,17 @@ const UpcomingEvent = () => {
   );
 };
 
-const DomainCard = ({ icon, title, description, emoji }: { icon: React.ReactNode, title: string, description: string, emoji: string }) => {
+// Component to display a single Domain Card (based on your Domains.tsx structure)
+interface DomainCardProps {
+  icon: React.ReactNode; // Icon for the domain
+  title: string; // Title of the domain (e.g., DESIGN DOMAIN)
+  description: string; // Description of the domain
+  emoji: string; // Emoji for the domain
+}
+
+const DomainCard = ({ icon, title, description, emoji }: DomainCardProps) => {
   return (
-    <Card className="bg-card/50 backdrop-blur-sm border-white/10 overflow-hidden h-full">
+    <Card className="bg-card/50 backdrop-blur-sm border-white/10 overflow-hidden h-full rounded-lg shadow-lg">
       <CardContent className="p-6 flex flex-col h-full">
         <div className="flex items-center justify-between mb-4">
           <div className="h-12 w-12 rounded-full bg-primary/20 flex items-center justify-center">
@@ -114,7 +135,9 @@ const DomainCard = ({ icon, title, description, emoji }: { icon: React.ReactNode
   );
 };
 
+
 const Home = () => {
+  // Image URLs for the hero section slider
   const sliderImages = [
     "https://i.postimg.cc/jSkvgnRF/pic10.jpg",
     "https://i.postimg.cc/N0MSLwjW/pic9.jpg",
@@ -128,6 +151,7 @@ const Home = () => {
     "https://i.postimg.cc/90DR801c/pic1.jpg"
   ];
 
+  // Data for the Domain Cards (only showing a subset for the homepage)
   const domainData = [
     {
       title: "DESIGN DOMAIN",
@@ -151,49 +175,57 @@ const Home = () => {
 
   return (
     <>
+      {/* Hero Section */}
       <section className="relative min-h-[80vh] flex flex-col items-center pt-20 pb-10 px-4">
         <div className="max-w-7xl mx-auto relative z-10 text-center">
+          {/* Sparkling effects (assuming these are styled elsewhere) */}
           <div className="sparkling absolute top-5 left-1/4"></div>
           <div className="sparkling absolute bottom-10 right-1/3"></div>
-          
+
+          {/* Main Heading */}
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif font-semibold mb-6 bg-clip-text text-transparent bg-magic-gradient relative">
             Explore Your Magic
           </h1>
 
+          {/* Image Slider */}
           <div className="my-8 max-w-4xl mx-auto">
             <Carousel
               opts={{
                 align: "center",
-                loop: true,
+                loop: true, // Loop the carousel
               }}
               className="w-full"
             >
               <CarouselContent>
+                {/* Map through slider images */}
                 {sliderImages.map((image, index) => (
                   <CarouselItem key={index}>
-                    <div className="p-1">
-                      <div className="overflow-hidden rounded-xl">
-                        <img 
-                          src={image} 
-                          alt={`Creativity Club ${index + 1}`} 
-                          className="aspect-[16/9] object-cover w-full h-full"
+                    <div className="p-1"> {/* Padding around the image */}
+                      <div className="overflow-hidden rounded-xl"> {/* Rounded corners for the image container */}
+                        <img
+                          src={image}
+                          alt={`Creativity Club ${index + 1}`}
+                          className="aspect-[16/9] object-cover w-full h-full" // Image styling for aspect ratio and cover
                         />
                       </div>
                     </div>
                   </CarouselItem>
                 ))}
               </CarouselContent>
+              {/* Carousel Navigation Arrows */}
               <div className="flex items-center justify-between absolute top-1/2 -translate-y-1/2 left-0 right-0 px-4">
                 <CarouselPrevious className="relative" />
                 <CarouselNext className="relative" />
               </div>
             </Carousel>
           </div>
-          
+
+          {/* Descriptive Text */}
           <p className="text-lg sm:text-xl max-w-2xl mx-auto mb-10 text-white/80">
             Unlock your creative potential through art, writing, and collaborative magic. Join our community of imaginative souls.
           </p>
-          
+
+          {/* Call to Action Buttons */}
           <div className="flex flex-wrap gap-4 justify-center">
             <Button
               asChild
@@ -201,7 +233,7 @@ const Home = () => {
             >
               <Link to="/about">Join Us</Link>
             </Button>
-            
+
             <Button
               asChild
               variant="outline"
@@ -211,39 +243,40 @@ const Home = () => {
             </Button>
           </div>
         </div>
-        
+
+        {/* Gradient at the bottom of the hero section */}
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent"></div>
       </section>
-      
-      <section className="py-16 px-4">
+
+      {/* Section: Find Your Creative Community & Upcoming Event (Interchanged Position) */}
+      <section className="py-16 px-4 bg-gradient-to-b from-background to-card/30"> {/* Added background gradient for visual separation */}
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-serif font-medium mb-4">Domains</h2>
-            <p className="text-lg max-w-2xl mx-auto text-muted-foreground mb-8">
-              Discover the different areas where our creativity thrives and projects come to life.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            {domainData.map((domain, index) => (
-              <DomainCard
-                key={index}
-                icon={domain.icon}
-                title={domain.title}
-                description={domain.description}
-                emoji={domain.emoji}
-              />
-            ))}
-          </div>
-          
-          <div className="text-center">
-            <Button asChild variant="outline" className="border-primary/50 hover:bg-primary/10 text-primary">
-              <Link to="/domains">Explore All Domains</Link>
-            </Button>
+          {/* Grid for the text content and the upcoming event card */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            {/* Left side: Text content */}
+            <div>
+              <h2 className="text-3xl sm:text-4xl font-serif font-medium mb-6">
+                Find Your Creative Community
+              </h2>
+              <p className="text-lg text-muted-foreground mb-6">
+                The Creativity Club provides a supportive environment for artists, writers, and creative thinkers to share ideas, learn new skills, and collaborate on magical projects.
+              </p>
+              <p className="text-lg text-muted-foreground mb-8">
+                Whether you're a seasoned creator or just beginning your journey, you'll find a place in our enchanted community.
+              </p>
+              <Button asChild variant="outline" className="border-primary/50 hover:bg-primary/10 text-primary rounded-md">
+                <Link to="/about">Learn More About Us</Link>
+              </Button>
+            </div>
+            {/* Right side: Upcoming Event card */}
+            <div>
+              <UpcomingEvent />
+            </div>
           </div>
         </div>
       </section>
-      
+
+      {/* Section: Ignite Your Imagination (Feature Cards) */}
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
@@ -252,7 +285,8 @@ const Home = () => {
               The Creativity Club is a sanctuary for those who seek to express themselves through various artistic mediums and magical creative pursuits.
             </p>
           </div>
-          
+
+          {/* Grid for Feature Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <FeatureCard
               title="Creative Workshops"
@@ -290,31 +324,43 @@ const Home = () => {
           </div>
         </div>
       </section>
-      
-      <section className="py-16 px-4 bg-gradient-to-b from-background to-card/30">
+
+
+      {/* Section: Domains (Interchanged Position) */}
+      <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-            <div>
-              <h2 className="text-3xl sm:text-4xl font-serif font-medium mb-6">
-                Find Your Creative Community
-              </h2>
-              <p className="text-lg text-muted-foreground mb-6">
-                The Creativity Club provides a supportive environment for artists, writers, and creative thinkers to share ideas, learn new skills, and collaborate on magical projects.
-              </p>
-              <p className="text-lg text-muted-foreground mb-8">
-                Whether you're a seasoned creator or just beginning your journey, you'll find a place in our enchanted community.
-              </p>
-              <Button asChild variant="outline" className="border-primary/50 hover:bg-primary/10 text-primary">
-                <Link to="/about">Learn More About Us</Link>
-              </Button>
-            </div>
-            <div>
-              <UpcomingEvent />
-            </div>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-serif font-medium mb-4">Domains</h2>
+            <p className="text-lg max-w-2xl mx-auto text-muted-foreground mb-8">
+              Discover the different areas where our creativity thrives and projects come to life.
+            </p>
+          </div>
+
+          {/* Grid for Domain Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            {/* Map through domain data and render a DomainCard for each */}
+            {domainData.map((domain, index) => (
+              <DomainCard
+                key={index} // Using index as key, consider a unique ID if available
+                icon={domain.icon}
+                title={domain.title}
+                description={domain.description}
+                emoji={domain.emoji} // Assuming emoji is still used in this version of DomainCard
+              />
+            ))}
+          </div>
+
+          {/* Button to explore all domains */}
+          <div className="text-center">
+            <Button asChild variant="outline" className="border-primary/50 hover:bg-primary/10 text-primary rounded-md">
+              <Link to="/domains">Explore All Domains</Link>
+            </Button>
           </div>
         </div>
       </section>
-      
+
+
+      {/* Section: Join Our Magical Journey */}
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl font-serif font-medium mb-6">
