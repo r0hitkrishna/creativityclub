@@ -178,77 +178,77 @@ const Members = () => {
       role: "President",
       instagram: "http://instagram.com/beast_boyy_2310/",
       linkedin: "https://www.linkedin.com/in/nividsaxena/",
-      image: "https://i.postimg.cc/pLqGXrRK/nivid.jpg"
+      image: "https://i.postimg.cc/6QSsDLJP/Nivid.png"
     },
     {
       name: "Love Soni",
       role: "Vice President",
       instagram: "https://www.instagram.com/lovesoni_12/",
       linkedin: "https://www.linkedin.com/in/love-soni-69511321a/",
-      image: "https://i.postimg.cc/wxmGc9Qd/love.jpg"
+      image: "https://i.postimg.cc/rmKV4wbB/Love.png"
     },
     {
       name: "Tanisha Chetani",
       role: "General Secretary",
       instagram: "https://www.instagram.com/_tanisha_2803/",
       linkedin: "https://www.linkedin.com/in/tanisha-chetani/",
-      image: "https://i.postimg.cc/Zn8jkKwB/tanisha.jpg"
+      image: "https://i.postimg.cc/Y9nxXbd4/Tanisha.png"
     },
     {
       name: "Rohit Krishna",
       role: "Design Head",
       instagram: "https://www.instagram.com/r0hitkrishna/",
       linkedin: "https://www.linkedin.com/in/rohit-krishna/",
-      image: "https://i.postimg.cc/zfKtrjtP/test.jpg"
+      image: "https://i.postimg.cc/rw0Nf14s/Rohit.png"
     },
     {
       name: "Sruti Samantaray",
       role: "Editorial Head",
       instagram: "https://www.instagram.com/sruti.samantaray/",
       linkedin: "https://www.linkedin.com/in/sruti-samantaray/",
-      image: "https://i.postimg.cc/W3JXn7r7/shruti.jpg"
+      image: "https://i.postimg.cc/CKCP4CyD/Sruti.png"
     },
     {
       name: "Anshika Babel",
       role: "Creative Head",
       instagram: "https://www.instagram.com/anshikababel/",
       linkedin: "https://www.linkedin.com/in/anshika-babel/",
-      image: "https://i.postimg.cc/7Zxtk08x/anshika.jpg"
+      image: "https://i.postimg.cc/RVqFtXr3/Anshika.png"
     },
     {
       name: "Shravya Jain",
       role: "Events Head",
       instagram: "https://www.instagram.com/shravya.j_/",
       linkedin: "https://www.linkedin.com/in/shravya-jain/",
-      image: "https://i.postimg.cc/rpHfxHdm/shravya.jpg",
+      image: "https://i.postimg.cc/vHSp1vMZ/Shravya.png",
     },
     {
       name: "Shubhi Nair",
       role: "Operations Head",
       instagram: "https://www.instagram.com/shubhi_nair/",
       linkedin: "https://www.linkedin.com/in/shubhi-nair/",
-      image: "https://i.postimg.cc/x8DgFb3V/shubhi.jpg"
+      image: "https://i.postimg.cc/W40KHLZd/Shubhi.png"
     },
     {
       name: "Tanishka Kothavale",
       role: "Logistics Head",
       instagram: "https://www.instagram.com/tanishkaa_2601/",
       linkedin: "https://www.linkedin.com/in/tanishka-kothavale/",
-      image: "https://i.postimg.cc/qBy16jpJ/tanishka.jpg"
+      image: "https://i.postimg.cc/13QYV72P/tanishka.png"
     },
     {
       name: "Abhinandan Agarwal",
       role: "Finance Head",
       instagram: "https://www.instagram.com/abhhinandann/",
       linkedin: "https://www.linkedin.com/in/abhinandan-agarwal/",
-      image: "https://i.postimg.cc/YqNDZ8Pn/abhi.jpg"
+      image: "https://i.postimg.cc/yd5hHWcn/Abhinandan.png"
     },
     {
       name: "Adarsh Anand",
       role: "PR & Outreach Head",
       instagram: "https://www.instagram.com/adarsh__185/",
       linkedin: "https://www.linkedin.com/in/adarsh-anand/",
-      image: "https://i.postimg.cc/GhnSX6XT/adarsh.jpg"
+      image: "https://i.postimg.cc/7h3NnwJV/Adarsh.png"
     }
   ];
 
