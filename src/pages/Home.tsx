@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -248,21 +247,27 @@ const Home = () => {
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent"></div>
       </section>
 
-      {/* Section: Find Your Creative Community & Upcoming Event (Interchanged Position) */}
+      {/* Section: Discover Your Creative Tribe & Upcoming Event */}
       <section className="py-16 px-4 bg-gradient-to-b from-background to-card/30"> {/* Added background gradient for visual separation */}
         <div className="max-w-7xl mx-auto">
           {/* Grid for the text content and the upcoming event card */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
             {/* Left side: Text content */}
             <div>
+              {/* Updated heading text */}
               <h2 className="text-3xl sm:text-4xl font-serif font-medium mb-6">
-                Find Your Creative Community
+                Discover Your Creative Tribe
               </h2>
+              {/* Updated paragraph text */}
               <p className="text-lg text-muted-foreground mb-6">
-                The Creativity Club provides a supportive environment for artists, writers, and creative thinkers to share ideas, learn new skills, and collaborate on magical projects.
+                The Creativity Club is a vibrant haven for artists, writers, and
+                imaginative minds to connect, share ideas, grow their skills, and
+                collaborate on inspiring projects.
               </p>
+              {/* Updated paragraph text */}
               <p className="text-lg text-muted-foreground mb-8">
-                Whether you're a seasoned creator or just beginning your journey, you'll find a place in our enchanted community.
+                Whether you're a seasoned creator or just starting out, you'll find a
+                welcoming space in our magical community.
               </p>
               <Button asChild variant="outline" className="border-primary/50 hover:bg-primary/10 text-primary rounded-md">
                 <Link to="/about">Learn More About Us</Link>
@@ -326,7 +331,7 @@ const Home = () => {
       </section>
 
 
-      {/* Section: Domains (Interchanged Position) */}
+      {/* Section: Domains */}
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
