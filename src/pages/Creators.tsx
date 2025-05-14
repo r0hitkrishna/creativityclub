@@ -256,9 +256,8 @@ const Creators = () => {
         {/* Introductory paragraph */}
         <div className="mb-12">
           <p className="text-xl text-muted-foreground max-w-3xl">
-            Meet the talented individuals who brought the Creativity Club website to life.
-            This magical corner of the web was created through their combined creativity,
-            technical skills, and passion.
+            Meet the brilliant minds behind the Creativity Club website — a vibrant digital 
+            space crafted through their creativity, technical expertise, and passion.
           </p>
         </div>
 
