@@ -1,16 +1,21 @@
 
+import { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 import HeroSection from "@/components/HeroSection";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Facebook, Instagram } from "lucide-react";
 
+// Initialize EmailJS
+emailjs.init("oOusUq9y0wVNIS5M4"); // Public key
+
 const Contact = () => {
   const { toast } = useToast();
+  const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -24,24 +29,45 @@ const Contact = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      const result = await emailjs.send(
+        "service_ina14yk", // Service ID
+        "template_e8eivr5", // Template ID
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          subject: formData.subject,
+          message: formData.message
+        }
+      );
+      
+      console.log("Email sent successfully:", result.text);
+      
       toast({
         title: "Message Sent!",
         description: "We'll get back to you as soon as possible.",
       });
+      
       setFormData({
         name: "",
         email: "",
         subject: "",
         message: ""
       });
+    } catch (error) {
+      console.error("Failed to send email:", error);
+      toast({
+        title: "Failed to send message",
+        description: "Please try again or contact us directly.",
+        variant: "destructive"
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
   
   return (
@@ -133,7 +159,7 @@ const Contact = () => {
               <div className="bg-card/90 backdrop-blur-sm rounded-lg p-6">
                 <h2 className="text-2xl font-serif mb-6">Send Us a Message</h2>
                 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                   <div>
                     <Label htmlFor="name">Your Name</Label>
                     <Input

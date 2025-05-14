@@ -57,9 +57,6 @@ const Footer = () => {
           <p className="text-muted-foreground text-sm">
             © {new Date().getFullYear()} Creativity Club. All rights reserved.
           </p>
-          <div className="mt-4 text-xs text-muted-foreground">
-            <Link to="/creators" className="hover:text-white transition-colors">creators</Link>
-          </div>
         </div>
       </div>
       

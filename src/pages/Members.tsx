@@ -156,67 +156,67 @@ const Members = () => {
       name: "Nivid Saxena",
       role: "President",
       instagram: "http://instagram.com/beast_boyy_2310/",
-      image: "https://ibb.co/WWbfrmfb"
+      image: "https://i.postimg.cc/pLqGXrRK/nivid.jpg"
     },
     {
       name: "Love Soni",
       role: "Vice President",
       instagram: "https://www.instagram.com/lovesoni_12/",
-      image: "https://ibb.co/KcxCqG5t"
+      image: "https://i.postimg.cc/wxmGc9Qd/love.jpg"
     },
     {
       name: "Tanisha Chetani",
       role: "General Secretary",
       instagram: "https://www.instagram.com/_tanisha_2803/",
-      image: "https://ibb.co/Q3kWrFn3"
+      image: "https://i.postimg.cc/Zn8jkKwB/tanisha.jpg"
     },
     {
       name: "Rohit Krishna",
       role: "Design Head",
       instagram: "https://www.instagram.com/r0hitkrishna/",
-      image: "https://ibb.co/Wv4cWmvB"
+      image: "https://i.postimg.cc/Bvbh83nk/rohit-png.jpg"
     },
     {
       name: "Sruti Samantaray",
       role: "Editorial Head",
       instagram: "https://www.instagram.com/sruti.samantaray/",
-      image: "https://ibb.co/hxj8DRJV"
+      image: "https://i.postimg.cc/W3JXn7r7/shruti.jpg"
     },
     {
       name: "Anshika Babel",
       role: "Creative Head",
       instagram: "https://www.instagram.com/anshikababel/",
-      image: "https://ibb.co/0j9BbHyd"
+      image: "https://i.postimg.cc/7Zxtk08x/anshika.jpg"
     },
     {
-      name: "Sharavya Jain",
+      name: "Shravya Jain",
       role: "Events Head",
       instagram: "https://www.instagram.com/shravya.j_/",
-      image: "https://ibb.co/0yBMDjJ2"
+      image: "https://i.postimg.cc/rpHfxHdm/shravya.jpg"
     },
     {
       name: "Shubhi Nair",
       role: "Operations Head",
       instagram: "https://www.instagram.com/shubhi_nair/",
-      image: "https://ibb.co/6cMjmmwG"
+      image: "https://i.postimg.cc/x8DgFb3V/shubhi.jpg"
     },
     {
       name: "Tanishka Kothavale",
       role: "Logistics Head",
       instagram: "https://www.instagram.com/tanishkaa_2601/",
-      image: "https://ibb.co/cSpxx6Vw"
+      image: "https://i.postimg.cc/qBy16jpJ/tanishka.jpg"
     },
     {
       name: "Abhinandan Agarwal",
       role: "Finance Head",
       instagram: "https://www.instagram.com/abhhinandann/",
-      image: "https://ibb.co/V0RqbTtQ"
+      image: "https://i.postimg.cc/YqNDZ8Pn/abhi.jpg"
     },
     {
       name: "Adarsh Anand",
       role: "PR & Outreach Head",
       instagram: "https://www.instagram.com/adarsh__185/",
-      image: "https://ibb.co/27f0jLv1"
+      image: "https://i.postimg.cc/GhnSX6XT/adarsh.jpg"
     }
   ];
 
