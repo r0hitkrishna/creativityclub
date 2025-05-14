@@ -35,6 +35,7 @@ const MemberCard = ({ member }: { member: MemberData }) => {
             className="w-full h-full object-cover object-center rounded-t-lg"
             onError={(e) => {
               // Fallback to a generic placeholder if the image fails to load
+              // Using placehold.co for a reliable fallback image URL
               (e.target as HTMLImageElement).src = "https://placehold.co/600x400/333333/FFFFFF?text=Image+Not+Found";
             }}
             // Inline styles for object fit and background blend mode
@@ -125,70 +126,80 @@ const Members = () => {
       role: "President",
       instagram: "https://www.instagram.com/palak__goyal2404/",
       linkedin: "https://www.linkedin.com/in/palak-goyal-362309222/",
-      image: "https://placehold.co/600x400/8A2BE2/FFFFFF?text=Palak+Goyal" // Placeholder image
+      // Replaced Pexels page URL with placehold.co URL
+      image: "https://placehold.co/600x400/8A2BE2/FFFFFF?text=Palak+Goyal"
     },
     {
       name: "Shriya Garg",
       role: "Vice President",
       instagram: "https://www.instagram.com/_shriyagarg_26/",
       linkedin: "https://www.linkedin.com/in/shriya-garg-sg26/",
-      image: "https://placehold.co/600x400/32CD32/FFFFFF?text=Shriya+Garg" // Placeholder image
+      // Replaced Pexels page URL with placehold.co URL
+      image: "https://placehold.co/600x400/32CD32/FFFFFF?text=Shriya+Garg"
     },
     {
       name: "Veda Chandergi",
       role: "General Secretary",
       instagram: "https://www.instagram.com/vedach05/",
       linkedin: "https://www.linkedin.com/in/veda-chandergi-5b9611215/",
-      image: "https://placehold.co/600x400/FFD700/000000?text=Veda+Chandergi" // Placeholder image
+       // Replaced Pexels page URL with placehold.co URL
+      image: "https://placehold.co/600x400/FFD700/000000?text=Veda+Chandergi"
     },
     {
       name: "Anushka Chandergi",
       role: "Design Head",
       instagram: "https://www.instagram.com/anushkavc0302/",
       linkedin: "https://www.linkedin.com/in/anushka-chandergi-535925213/",
-      image: "https://placehold.co/600x400/FF8C00/FFFFFF?text=Anushka+Chandergi" // Placeholder image
+       // Replaced Pexels page URL with placehold.co URL
+      image: "https://placehold.co/600x400/FF8C00/FFFFFF?text=Anushka+Chandergi"
     },
     {
       name: "Haritha Nivrithi",
       role: "Editorial Head",
       instagram: "https://www.instagram.com/haritha_nivrithi/",
       linkedin: "https://www.linkedin.com/in/haritha-nivrithi-992267227/",
-      image: "https://placehold.co/600x400/4682B4/FFFFFF?text=Haritha+Nivrithi" // Placeholder image
+       // Replaced Pexels page URL with placehold.co URL
+      image: "https://placehold.co/600x400/4682B4/FFFFFF?text=Haritha+Nivrithi"
     },
     {
       name: "Surbhi Raj",
       role: "Events Head",
       instagram: "https://www.instagram.com/surbhiraj979/",
       linkedin: "https://www.linkedin.com/in/surbhi-raj-545018225/",
-      image: "https://placehold.co/600x400/9370DB/FFFFFF?text=Surbhi+Raj" // Placeholder image
+       // Replaced Pexels page URL with placehold.co URL
+      image: "https://placehold.co/600x400/9370DB/FFFFFF?text=Surbhi+Raj"
     },
     {
       name: "Pawan Kumar Sahu",
       role: "Operations Head",
       instagram: "https://www.instagram.com/pawan_kumar_sahu_s19/",
       linkedin: "https://www.linkedin.com/in/pawan-kumar-sahu-541401225/",
-      image: "https://placehold.co/600x400/FF69B4/FFFFFF?text=Pawan+Kumar+Sahu" // Placeholder image
+       // Replaced Pexels page URL with placehold.co URL
+      image: "https://placehold.co/600x400/FF69B4/FFFFFF?text=Pawan+Kumar+Sahu"
     },
     {
       name: "Shubh Kumar",
       role: "Logistics Head",
       instagram: "https://www.instagram.com/shubhkumar763/",
       linkedin: "https://www.linkedin.com/in/shubh-kumar-24359122a/",
-      image: "https://placehold.co/600x400/00CED1/FFFFFF?text=Shubh+Kumar" // Placeholder image
+       // Replaced Pexels page URL with placehold.co URL
+      image: "https://placehold.co/600x400/00CED1/FFFFFF?text=Shubh+Kumar"
     },
     {
       name: "Parth Khandelwal",
       role: "Finance Head",
       instagram: "https://www.instagram.com/parthkhandelwal78/",
       linkedin: "https://www.linkedin.com/in/parth-khandelwal-pk78/",
-      image: "https://placehold.co/600x400/FFA500/FFFFFF?text=Parth+Khandelwal" // Placeholder image
+       // Replaced Pexels page URL with placehold.co URL
+      image: "https://placehold.co/600x400/FFA500/FFFFFF?text=Parth+Khandelwal"
     },
     {
       name: "Kashish Agarwal",
       role: "PR & Outreach Head",
       instagram: "https://www.instagram.com/ag_kashish02/",
       linkedin: "https://www.linkedin.com/in/kashish-agarwal-ka02/",
-      image: "https://placehold.co/600x400/DA70D6/FFFFFF?text=Kashish+Agarwal" // Placeholder image
+       // Replaced Pexels page URL with placehold.co URL
+      image: "https://placehold.co/600x400/DA70D6/FFFFFF?text=Kashish+Agarwal"
     }
   ];
 
@@ -200,7 +211,7 @@ const Members = () => {
       instagram: "http://instagram.com/beast_boyy_2310/",
       linkedin: "https://www.linkedin.com/in/nividsaxena/",
       image: "https://i.postimg.cc/6QSsDLJP/Nivid.png"
-    }, // Fixed missing closing brace here
+    },
     {
       name: "Love Soni",
       role: "Vice President",
