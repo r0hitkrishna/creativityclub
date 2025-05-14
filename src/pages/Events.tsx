@@ -158,13 +158,8 @@ const VerticalEventSlider = ({ events }: { events: EventCardProps[] }) => {
           </CarouselItem>
         ))}
       </CarouselContent>
-      {/* Carousel navigation buttons */}
-      <div className="flex justify-center mt-4">
-        <div className="flex items-center gap-2">
-          <CarouselPrevious />
-          <CarouselNext />
-        </div>
-      </div>
+      {/* Carousel navigation buttons - REMOVED */}
+      {/* The navigation buttons are removed as requested */}
     </Carousel>
   );
 };
@@ -214,7 +209,8 @@ const Events = () => {
       date: "August 10, 2025",
       time: "1:00 PM",
       description: "Explore the art of three-dimensional creation in our hands-on sculpture workshop. Learn basic sculpting techniques and create your own masterpiece. Materials will be provided. Unleash your inner sculptor and bring your ideas to life!",
-      image: "https://images.unsplash.com/photo-1534250371915-da6263032b9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      // Added a sample image URL for Sculpture Workshop
+      image: "https://placehold.co/600x400/FFA07A/000000?text=Sculpture+Workshop",
       category: "Workshop",
       type: "upcoming",
       link: "#" // Placeholder link
