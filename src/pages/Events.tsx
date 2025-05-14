@@ -219,6 +219,30 @@ const Events = () => {
       type: "upcoming",
       link: "#" // Placeholder link
     },
+     // Added two more sample upcoming events
+     {
+      id: "upcoming-6",
+      title: "Creative Coding Session",
+      date: "August 25, 2025",
+      time: "11:00 AM",
+      description: "Dive into the world of creative coding and explore how to generate art and visuals using code. This session is beginner-friendly.",
+      image: "https://placehold.co/600x400/FF5733/FFFFFF?text=Creative+Coding", // Sample image 1
+      category: "Session",
+      type: "upcoming",
+      link: "#" // Placeholder link
+    },
+    {
+      id: "upcoming-7",
+      title: "Comics & Illustration Meetup",
+      date: "September 7, 2025",
+      time: "2:00 PM",
+      description: "Connect with fellow comics enthusiasts and illustrators. Share your work, get feedback, and collaborate on new projects.",
+      image: "https://placehold.co/600x400/33FF57/000000?text=Comics+Meetup", // Sample image 2
+      category: "Meetup",
+      type: "upcoming",
+      link: "#" // Placeholder link
+    },
+
 
     // Previous Events (using the data you provided)
     {
