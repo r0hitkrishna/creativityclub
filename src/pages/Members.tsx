@@ -23,19 +23,18 @@ const MemberCard = ({ member }: { member: MemberData }) => {
   return (
     <Card className="bg-card/50 backdrop-blur-sm border-white/10 overflow-hidden h-full">
       <div className="p-1 bg-gradient-to-r from-magic-purple via-magic-teal to-magic-gold rounded-t-xl">
-        <div className="h-64 overflow-hidden rounded-t-lg">
-          <AspectRatio ratio={4/5} className="bg-muted/20">
-            <img
-              src={member.image}
-              alt={member.name}
-              className="w-full h-full object-cover object-center rounded-t-lg"
-              onError={(e) => {
-                // Fallback to placeholder if image fails to load
-                (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1000&auto=format&fit=crop";
-              }}
-            />
-          </AspectRatio>
-        </div>
+        <AspectRatio ratio={1} className="bg-muted/20">
+          <img
+            src={member.image}
+            alt={member.name}
+            className="w-full h-full object-cover object-center rounded-t-lg"
+            onError={(e) => {
+              // Fallback to placeholder if image fails to load
+              (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?q=80&w=600&auto=format&fit=crop";
+            }}
+            style={{ objectFit: "cover", backgroundBlendMode: "overlay", backgroundColor: "rgba(38, 30, 58, 0.7)" }}
+          />
+        </AspectRatio>
       </div>
       <CardContent className="p-6">
         <h3 className="text-xl font-serif mb-1">{member.name}</h3>
@@ -93,61 +92,61 @@ const Members = () => {
       name: "Palak Goyal",
       role: "President",
       instagram: "https://www.instagram.com/palak__goyal2404/",
-      image: "https://ibb.co/d4jwYDwc"
+      image: "https://i.ibb.co/XjC2FLM/palak.jpg"
     },
     {
       name: "Shriya Garg",
       role: "Vice President",
       instagram: "https://www.instagram.com/_shriyagarg_26/",
-      image: "https://ibb.co/VWsvQH95"
+      image: "https://i.ibb.co/8m1Vx7M/shriya.jpg"
     },
     {
       name: "Veda Chandergi",
       role: "General Secretary",
       instagram: "https://www.instagram.com/vedach05/",
-      image: "https://ibb.co/NnxtZ3wZ"
+      image: "https://i.ibb.co/KLKv5ky/veda.jpg"
     },
     {
       name: "Anushka Chandergi",
       role: "Design Head",
       instagram: "https://www.instagram.com/anushkavc0302/",
-      image: "https://ibb.co/TMMRhK1g"
+      image: "https://i.ibb.co/H7vcQpS/anushka.jpg"
     },
     {
       name: "Haritha Nivrithi",
       role: "Editorial Head",
       instagram: "https://www.instagram.com/haritha_nivrithi/",
-      image: "https://ibb.co/Kx6FBCPK"
+      image: "https://i.ibb.co/NpCvwDB/haritha.jpg"
     },
     {
       name: "Surbhi Raj",
       role: "Events Head",
       instagram: "https://www.instagram.com/surbhiraj979/",
-      image: "https://ibb.co/bggdWw2C"
+      image: "https://i.ibb.co/yqbdMXk/surbhi.jpg"
     },
     {
       name: "Pawan Kumar Sahu",
       role: "Operations Head",
       instagram: "https://www.instagram.com/pawan_kumar_sahu_s19/",
-      image: "https://ibb.co/4R9BHCp5"
+      image: "https://i.ibb.co/KDn2vkP/pawan.jpg"
     },
     {
       name: "Shubh Kumar",
       role: "Logistics Head",
       instagram: "https://www.instagram.com/shubhkumar763/",
-      image: "https://ibb.co/R40vWmfK"
+      image: "https://i.ibb.co/Tr9R2zw/shubh.jpg"
     },
     {
       name: "Parth Khandelwal",
       role: "Finance Head",
       instagram: "https://www.instagram.com/parthkhandelwal78/",
-      image: "https://ibb.co/N29xv9gj"
+      image: "https://i.ibb.co/cCkmchP/parth.jpg"
     },
     {
       name: "Kashish Agarwal",
       role: "PR & Outreach Head",
       instagram: "https://www.instagram.com/ag_kashish02/",
-      image: "https://ibb.co/gZ0szHsD"
+      image: "https://i.ibb.co/vwkhMKZ/kashish.jpg"
     }
   ];
 

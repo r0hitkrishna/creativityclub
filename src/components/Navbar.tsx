@@ -12,11 +12,11 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Creators', path: '/creators' },
     { name: 'About', path: '/about' },
     { name: 'Events', path: '/events' },
     { name: 'Members', path: '/members' },
     { name: 'Contact', path: '/contact' },
+    { name: 'Creators', path: '/creators' },
   ];
 
   return (
