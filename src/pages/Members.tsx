@@ -178,7 +178,7 @@ const Members = () => {
       role: "President",
       instagram: "http://instagram.com/beast_boyy_2310/",
       linkedin: "https://www.linkedin.com/in/nividsaxena/",
-      image: "https://i.postimg.cc/6QSsDLJP/Nivid.png"
+      image: "https://imagekit.io/tools/asset-public-link?detail=%7B%22name%22%3A%22Nivid.png%22%2C%22type%22%3A%22image%2Fpng%22%2C%22signedurl_expire%22%3A%222028-05-13T18%3A32%3A41.484Z%22%2C%22signedUrl%22%3A%22https%3A%2F%2Fmedia-hosting.imagekit.io%2F2c73277f0e6044ab%2FNivid.png%3FExpires%3D1841855561%26Key-Pair-Id%3DK2ZIVPTIP2VGHC%26Signature%3D0lBqDiC-dzI2JkHa30XOUeH-QI2O3IMXtLp8H~pcT8wpNOr9u1lZl4pAyJmgqlDAh6Lpg12TjdhCf22sFAav5PnMFDgXZ0VtcOl-fwY9B3nq7lnkhwJDRQqnIk66AxAr3kTXmASH9psFeACrsGYpS4p4catRXplQDA54bbf2cvboNhrItcXmSjO19Nd38IUEkJnNcf2FIkfMWGmMoIakoLYxDV8IS5huNYQxTqfoG2ijg52jFxbn5vw~1emKjzmSgTOkhLhsVAaAq9Y1xZv5wbDgZdlCV-v18EvPJEfJ1x5jM157D6ZxUHCkMqpJ2qE84IzpNW7Ij4a9daMxMjyEFw__%22%7D"
     },
     {
       name: "Love Soni",
