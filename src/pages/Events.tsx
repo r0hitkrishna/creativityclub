@@ -360,7 +360,7 @@ const Events = () => {
   // Select the first 3 upcoming events to feature in the vertical slider
   const featuredUpcomingEvents = upcomingEvents.slice(0, 3);
   // Select the remaining upcoming events for the grid
-  const moreUpcomingEvents = upcomingEvents.slice(3);
+  const moreProposedEvents = upcomingEvents.slice(3);
 
 
   return (
@@ -395,16 +395,16 @@ const Events = () => {
                 <VerticalEventSlider events={featuredUpcomingEvents} />
               </div>
 
-              {/* Grid for more upcoming events */}
-              {/* Only show this section if there are more upcoming events */}
-              {moreUpcomingEvents.length > 0 && (
+              {/* Grid for more proposed events */}
+              {/* Only show this section if there are more proposed events */}
+              {moreProposedEvents.length > 0 && (
                 <div className="mt-16">
                   <h3 className="text-2xl font-serif font-medium mb-8 text-center">
-                    More Upcoming Events
+                    More Proposed Events
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {/* Map through the remaining upcoming events and display them as cards */}
-                    {moreUpcomingEvents.map(event => (
+                    {moreUProposedEvents.map(event => (
                       <EventCard
                         key={event.id} // Use event id as key
                         title={event.title}
