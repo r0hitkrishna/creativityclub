@@ -29,10 +29,10 @@ const DomainCard = ({ icon, title, domainHead, description, imageUrl }: DomainCa
         </div>
 
         {/* Sample Image */}
-        {/* Added a sample image from Unsplash above the description */}
+        {/* Added a sample placeholder image above the description */}
         <div className="mb-4">
            <img
-            src={imageUrl} // Use the image URL from the data
+            src={imageUrl} // Use the placeholder image URL from the data
             alt={`Sample image for ${title}`}
             className="w-full h-auto rounded-md object-cover" // Added object-cover for better image fitting
             style={{ maxHeight: '200px' }} // Optional: Limit image height for consistency
@@ -56,45 +56,51 @@ const Domains = () => {
   const domainData = [
     {
       title: "DESIGN DOMAIN",
-      domainHead: "Anushka Chandergi", // Sample random name
+      domainHead: "Alex Creative", // Sample random name
       description: "The visual brain of the club! From posters to merch, this team turns ideas into eye-catching designs that speak for the club.",
       icon: <Palette className="h-6 w-6 text-primary" />,
-      imageUrl: "https://images.unsplash.com/photo-1496262966056-33c82413524c?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Sample Design image
+      // Using a reliable placeholder image
+      imageUrl: "https://placehold.co/400x200/8A2BE2/FFFFFF?text=Design+Domain"
     },
     {
       title: "FINANCE DOMAIN",
-      domainHead: "Parth Khandelwal", // Sample random name
+      domainHead: "Ben Ledger", // Sample random name
       description: "The money minds! They handle budgets, sponsorships, and make sure every rupee is smartly spent and tracked.",
       icon: <Coins className="h-6 w-6 text-primary" />,
-      imageUrl: "https://images.unsplash.com/photo-1563986768494-4ce2cd182f02?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Sample Finance image
+      // Using a reliable placeholder image
+      imageUrl: "https://placehold.co/400x200/32CD32/FFFFFF?text=Finance+Domain"
     },
     {
       title: "EDITORIAL DOMAIN",
-      domainHead: "Haritha Nivrithi", // Sample random name
+      domainHead: "Chloe Wordsmith", // Sample random name
       description: "Where word magic happens! From quirky captions to event write-ups, this team adds the sparkle to all things written.",
       icon: <Pencil className="h-6 w-6 text-primary" />,
-      imageUrl: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Sample Editorial image
+      // Using a reliable placeholder image
+      imageUrl: "https://placehold.co/400x200/FFD700/000000?text=Editorial+Domain"
     },
     {
       title: "EVENTS & OPERATIONS",
-      domainHead: "Surbhi Raj & Pawan Kumar", // Sample random name
+      domainHead: "David Organizer", // Sample random name
       description: "The action squad! They plan and execute everything from fests to casual meetups—bringing every event idea to life.",
       icon: <Tent className="h-6 w-6 text-primary" />,
-      imageUrl: "https://images.unsplash.com/photo-1505237531087-d66f3a2f147a?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Sample Events image
+      // Using a reliable placeholder image
+      imageUrl: "https://placehold.co/400x200/FF8C00/FFFFFF?text=Events+%26+Ops"
     },
     {
       title: "LOGISTICS DOMAIN",
-      domainHead: "Shubh Kumar", // Sample random name
+      domainHead: "Eva Coordinator", // Sample random name
       description: "The behind-the-scenes heroes! They handle everything from resources to on-ground execution, ensuring smooth and stress-free events.",
       icon: <Package className="h-6 w-6 text-primary" />,
-      imageUrl: "https://images.unsplash.com/photo-1587495984134-77202e289f0d?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Sample Logistics image
+      // Using a reliable placeholder image
+      imageUrl: "https://placehold.co/400x200/4682B4/FFFFFF?text=Logistics+Domain"
     },
     {
       title: "PR DOMAIN",
-      domainHead: "Kashish Agarwal", // Sample random name
+      domainHead: "Finn Communicator", // Sample random name
       description: "The voice of the club! They build our public presence, manage social media, and connect with sponsors and partners.",
       icon: <Users className="h-6 w-6 text-primary" />,
-      imageUrl: "https://images.unsplash.com/photo-1544006659-f0b21880ce51?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Sample PR image
+      // Using a reliable placeholder image
+      imageUrl: "https://placehold.co/400x200/9370DB/FFFFFF?text=PR+Domain"
     }
   ];
 
@@ -119,7 +125,7 @@ const Domains = () => {
                 title={domain.title}
                 domainHead={domain.domainHead} // Pass the domainHead
                 description={domain.description}
-                imageUrl={domain.imageUrl} // Pass the image URL
+                imageUrl={domain.imageUrl} // Pass the placeholder image URL
               />
             ))}
           </div>
@@ -130,3 +136,4 @@ const Domains = () => {
 };
 
 export default Domains;
+
