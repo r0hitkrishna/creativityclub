@@ -199,7 +199,7 @@ const Members = () => {
       role: "Design Head",
       instagram: "https://www.instagram.com/r0hitkrishna/",
       linkedin: "https://www.linkedin.com/in/rohit-krishna/",
-      image: "https://i.postimg.cc/Bvbh83nk/rohit-png.jpg"
+      image: "https://i.postimg.cc/zfKtrjtP/test.jpg"
     },
     {
       name: "Sruti Samantaray",
