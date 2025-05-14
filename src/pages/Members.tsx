@@ -1,145 +1,222 @@
 
+import { useState } from "react";
 import HeroSection from "@/components/HeroSection";
 import { Card, CardContent } from "@/components/ui/card";
+import { 
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious
+} from "@/components/ui/carousel";
+import { Instagram } from "lucide-react";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
-interface MemberCardProps {
+interface MemberData {
   name: string;
   role: string;
-  bio: string;
+  instagram: string;
   image: string;
-  socialLinks?: {
-    twitter?: string;
-    instagram?: string;
-    linkedin?: string;
-  };
 }
 
-const MemberCard = ({ name, role, bio, image, socialLinks }: MemberCardProps) => {
+const MemberCard = ({ member }: { member: MemberData }) => {
   return (
-    <Card className="bg-card/50 backdrop-blur-sm border-white/10 overflow-hidden">
+    <Card className="bg-card/50 backdrop-blur-sm border-white/10 overflow-hidden h-full">
       <div className="p-1 bg-gradient-to-r from-magic-purple via-magic-teal to-magic-gold rounded-t-xl">
-        <div className="h-64 overflow-hidden">
-          <img
-            src={image}
-            alt={name}
-            className="w-full h-full object-cover object-center"
-          />
+        <div className="h-64 overflow-hidden rounded-t-lg">
+          <AspectRatio ratio={4/5} className="bg-muted/20">
+            <img
+              src={member.image}
+              alt={member.name}
+              className="w-full h-full object-cover object-center rounded-t-lg"
+              onError={(e) => {
+                // Fallback to placeholder if image fails to load
+                (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1000&auto=format&fit=crop";
+              }}
+            />
+          </AspectRatio>
         </div>
       </div>
       <CardContent className="p-6">
-        <h3 className="text-xl font-serif mb-1">{name}</h3>
-        <p className="text-accent mb-4">{role}</p>
-        <p className="text-muted-foreground mb-4">{bio}</p>
+        <h3 className="text-xl font-serif mb-1">{member.name}</h3>
+        <p className="text-accent mb-4">{member.role}</p>
         
-        {socialLinks && (
-          <div className="flex gap-3">
-            {socialLinks.twitter && (
-              <a
-                href={socialLinks.twitter}
-                className="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all"
-                aria-label={`${name}'s Twitter`}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
-                </svg>
-              </a>
-            )}
-            
-            {socialLinks.instagram && (
-              <a
-                href={socialLinks.instagram}
-                className="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all"
-                aria-label={`${name}'s Instagram`}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
-                </svg>
-              </a>
-            )}
-            
-            {socialLinks.linkedin && (
-              <a
-                href={socialLinks.linkedin}
-                className="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all"
-                aria-label={`${name}'s LinkedIn`}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                  <rect width="4" height="12" x="2" y="9"></rect>
-                  <circle cx="4" cy="4" r="2"></circle>
-                </svg>
-              </a>
-            )}
-          </div>
-        )}
+        <div className="flex gap-3">
+          <a
+            href={member.instagram}
+            className="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all"
+            aria-label={`${member.name}'s Instagram`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Instagram className="h-4 w-4" />
+          </a>
+        </div>
       </CardContent>
     </Card>
   );
 };
 
+const BoardCarousel = ({ year, members }: { year: string, members: MemberData[] }) => {
+  return (
+    <div className="my-12">
+      <h2 className="text-3xl sm:text-4xl font-serif font-medium mb-8 text-center">
+        Board of {year}
+      </h2>
+      
+      <Carousel
+        className="max-w-6xl mx-auto"
+        opts={{
+          align: "start",
+          loop: true,
+        }}
+      >
+        <CarouselContent>
+          {members.map((member, index) => (
+            <CarouselItem key={index} className="sm:basis-1/2 md:basis-1/3 lg:basis-1/3 xl:basis-1/4 pl-4">
+              <MemberCard member={member} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <div className="flex justify-center mt-8">
+          <CarouselPrevious className="relative static mx-2" />
+          <CarouselNext className="relative static mx-2" />
+        </div>
+      </Carousel>
+    </div>
+  );
+};
+
 const Members = () => {
-  const boardMembers = [
+  const boardMembers2025: MemberData[] = [
     {
-      name: "Emily Wells",
+      name: "Palak Goyal",
       role: "President",
-      bio: "Emily is a novelist and painter who believes in the transformative power of creativity. She founded the Creativity Club to create a space where artists of all kinds could come together.",
-      image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80",
-      socialLinks: {
-        twitter: "#",
-        instagram: "#",
-        linkedin: "#"
-      }
+      instagram: "https://www.instagram.com/palak__goyal2404/",
+      image: "https://ibb.co/d4jwYDwc"
     },
     {
-      name: "Marcus Chen",
+      name: "Shriya Garg",
       role: "Vice President",
-      bio: "Marcus is a digital artist and animator who specializes in creating magical worlds and creatures. He oversees the club's exhibition programs.",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-      socialLinks: {
-        instagram: "#",
-        linkedin: "#"
-      }
+      instagram: "https://www.instagram.com/_shriyagarg_26/",
+      image: "https://ibb.co/VWsvQH95"
     },
     {
-      name: "Sofia Rodriguez",
-      role: "Workshop Coordinator",
-      bio: "Sofia is a poet and creative writing instructor who loves helping others find their voice. She plans and organizes the club's workshops and classes.",
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80",
-      socialLinks: {
-        twitter: "#",
-        instagram: "#"
-      }
+      name: "Veda Chandergi",
+      role: "General Secretary",
+      instagram: "https://www.instagram.com/vedach05/",
+      image: "https://ibb.co/NnxtZ3wZ"
     },
     {
-      name: "James Harper",
-      role: "Treasurer",
-      bio: "James is a photographer and business student who manages the club's finances and helps secure funding for events and projects.",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-      socialLinks: {
-        linkedin: "#"
-      }
+      name: "Anushka Chandergi",
+      role: "Design Head",
+      instagram: "https://www.instagram.com/anushkavc0302/",
+      image: "https://ibb.co/TMMRhK1g"
     },
     {
-      name: "Aisha Patel",
-      role: "Communications Director",
-      bio: "Aisha is a graphic designer and social media specialist who handles the club's online presence and designs promotional materials.",
-      image: "https://images.unsplash.com/photo-1619646176605-b7417fb53b1e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-      socialLinks: {
-        twitter: "#",
-        instagram: "#",
-        linkedin: "#"
-      }
+      name: "Haritha Nivrithi",
+      role: "Editorial Head",
+      instagram: "https://www.instagram.com/haritha_nivrithi/",
+      image: "https://ibb.co/Kx6FBCPK"
     },
     {
-      name: "David Kim",
-      role: "Events Manager",
-      bio: "David is a musician and event planner who coordinates the club's social events and performance nights.",
-      image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-      socialLinks: {
-        instagram: "#"
-      }
+      name: "Surbhi Raj",
+      role: "Events Head",
+      instagram: "https://www.instagram.com/surbhiraj979/",
+      image: "https://ibb.co/bggdWw2C"
+    },
+    {
+      name: "Pawan Kumar Sahu",
+      role: "Operations Head",
+      instagram: "https://www.instagram.com/pawan_kumar_sahu_s19/",
+      image: "https://ibb.co/4R9BHCp5"
+    },
+    {
+      name: "Shubh Kumar",
+      role: "Logistics Head",
+      instagram: "https://www.instagram.com/shubhkumar763/",
+      image: "https://ibb.co/R40vWmfK"
+    },
+    {
+      name: "Parth Khandelwal",
+      role: "Finance Head",
+      instagram: "https://www.instagram.com/parthkhandelwal78/",
+      image: "https://ibb.co/N29xv9gj"
+    },
+    {
+      name: "Kashish Agarwal",
+      role: "PR & Outreach Head",
+      instagram: "https://www.instagram.com/ag_kashish02/",
+      image: "https://ibb.co/gZ0szHsD"
+    }
+  ];
+
+  const boardMembers2024: MemberData[] = [
+    {
+      name: "Nivid Saxena",
+      role: "President",
+      instagram: "http://instagram.com/beast_boyy_2310/",
+      image: "https://ibb.co/WWbfrmfb"
+    },
+    {
+      name: "Love Soni",
+      role: "Vice President",
+      instagram: "https://www.instagram.com/lovesoni_12/",
+      image: "https://ibb.co/KcxCqG5t"
+    },
+    {
+      name: "Tanisha Chetani",
+      role: "General Secretary",
+      instagram: "https://www.instagram.com/_tanisha_2803/",
+      image: "https://ibb.co/Q3kWrFn3"
+    },
+    {
+      name: "Rohit Krishna",
+      role: "Design Head",
+      instagram: "https://www.instagram.com/r0hitkrishna/",
+      image: "https://ibb.co/Wv4cWmvB"
+    },
+    {
+      name: "Sruti Samantaray",
+      role: "Editorial Head",
+      instagram: "https://www.instagram.com/sruti.samantaray/",
+      image: "https://ibb.co/hxj8DRJV"
+    },
+    {
+      name: "Anshika Babel",
+      role: "Creative Head",
+      instagram: "https://www.instagram.com/anshikababel/",
+      image: "https://ibb.co/0j9BbHyd"
+    },
+    {
+      name: "Sharavya Jain",
+      role: "Events Head",
+      instagram: "https://www.instagram.com/shravya.j_/",
+      image: "https://ibb.co/0yBMDjJ2"
+    },
+    {
+      name: "Shubhi Nair",
+      role: "Operations Head",
+      instagram: "https://www.instagram.com/shubhi_nair/",
+      image: "https://ibb.co/6cMjmmwG"
+    },
+    {
+      name: "Tanishka Kothavale",
+      role: "Logistics Head",
+      instagram: "https://www.instagram.com/tanishkaa_2601/",
+      image: "https://ibb.co/cSpxx6Vw"
+    },
+    {
+      name: "Abhinandan Agarwal",
+      role: "Finance Head",
+      instagram: "https://www.instagram.com/abhhinandann/",
+      image: "https://ibb.co/V0RqbTtQ"
+    },
+    {
+      name: "Adarsh Anand",
+      role: "PR & Outreach Head",
+      instagram: "https://www.instagram.com/adarsh__185/",
+      image: "https://ibb.co/27f0jLv1"
     }
   ];
 
@@ -152,18 +229,9 @@ const Members = () => {
       
       <section className="py-12 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {boardMembers.map((member, index) => (
-              <MemberCard
-                key={index}
-                name={member.name}
-                role={member.role}
-                bio={member.bio}
-                image={member.image}
-                socialLinks={member.socialLinks}
-              />
-            ))}
-          </div>
+          <BoardCarousel year="2025" members={boardMembers2025} />
+          <div className="magical-divider my-16"></div>
+          <BoardCarousel year="2024" members={boardMembers2024} />
         </div>
       </section>
       

@@ -2,7 +2,11 @@
 import Home from './Home';
 
 const Index = () => {
-  return <Home />;
+  return (
+    <div className="animate-fade-in">
+      <Home />
+    </div>
+  );
 };
 
 export default Index;
