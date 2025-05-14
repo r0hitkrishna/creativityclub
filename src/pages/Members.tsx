@@ -105,70 +105,70 @@ const Members = () => {
       role: "President",
       instagram: "https://www.instagram.com/palak__goyal2404/",
       linkedin: "https://www.linkedin.com/in/palak-goyal-362309222/",
-      image: "https://i.ibb.co/d4jwYDwc/palak.jpg"
+      image: "https://www.pexels.com/photo/european-robin-perched-on-tree-branch-in-nature-32033989/"
     },
     {
       name: "Shriya Garg",
       role: "Vice President",
       instagram: "https://www.instagram.com/_shriyagarg_26/",
       linkedin: "https://www.linkedin.com/in/shriya-garg-sg26/",
-      image: "https://i.ibb.co/VWsvQH95/shriya.jpg"
+      image: "https://www.pexels.com/photo/european-robin-perched-on-tree-branch-in-nature-32033989/"
     },
     {
       name: "Veda Chandergi",
       role: "General Secretary",
       instagram: "https://www.instagram.com/vedach05/",
       linkedin: "https://www.linkedin.com/in/veda-chandergi-5b9611215/",
-      image: "https://i.ibb.co/NnxtZ3wZ/veda.jpg"
+      image: "https://www.pexels.com/photo/european-robin-perched-on-tree-branch-in-nature-32033989/"
     },
     {
       name: "Anushka Chandergi",
       role: "Design Head",
       instagram: "https://www.instagram.com/anushkavc0302/",
       linkedin: "https://www.linkedin.com/in/anushka-chandergi-535925213/",
-      image: "https://i.ibb.co/TMMRhK1g/anushka.jpg"
+      image: "https://www.pexels.com/photo/european-robin-perched-on-tree-branch-in-nature-32033989/"
     },
     {
       name: "Haritha Nivrithi",
       role: "Editorial Head",
       instagram: "https://www.instagram.com/haritha_nivrithi/",
       linkedin: "https://www.linkedin.com/in/haritha-nivrithi-992267227/",
-      image: "https://i.ibb.co/Kx6FBCPK/haritha.jpg"
+      image: "https://www.pexels.com/photo/european-robin-perched-on-tree-branch-in-nature-32033989/"
     },
     {
       name: "Surbhi Raj",
       role: "Events Head",
       instagram: "https://www.instagram.com/surbhiraj979/",
       linkedin: "https://www.linkedin.com/in/surbhi-raj-545018225/",
-      image: "https://i.ibb.co/bggdWw2C/surbhi.jpg"
+      image: "https://www.pexels.com/photo/european-robin-perched-on-tree-branch-in-nature-32033989/"
     },
     {
       name: "Pawan Kumar Sahu",
       role: "Operations Head",
       instagram: "https://www.instagram.com/pawan_kumar_sahu_s19/",
       linkedin: "https://www.linkedin.com/in/pawan-kumar-sahu-541401225/",
-      image: "https://i.ibb.co/4R9BHCp5/pawan.jpg"
+      image: "https://www.pexels.com/photo/european-robin-perched-on-tree-branch-in-nature-32033989/"
     },
     {
       name: "Shubh Kumar",
       role: "Logistics Head",
       instagram: "https://www.instagram.com/shubhkumar763/",
       linkedin: "https://www.linkedin.com/in/shubh-kumar-24359122a/",
-      image: "https://i.ibb.co/R40vWmfK/shubh.jpg"
+      image: "https://www.pexels.com/photo/european-robin-perched-on-tree-branch-in-nature-32033989/"
     },
     {
       name: "Parth Khandelwal",
       role: "Finance Head",
       instagram: "https://www.instagram.com/parthkhandelwal78/",
       linkedin: "https://www.linkedin.com/in/parth-khandelwal-pk78/",
-      image: "https://i.ibb.co/N29xv9g/parth.jpg"
+      image: "https://www.pexels.com/photo/european-robin-perched-on-tree-branch-in-nature-32033989/"
     },
     {
       name: "Kashish Agarwal",
       role: "PR & Outreach Head",
       instagram: "https://www.instagram.com/ag_kashish02/",
       linkedin: "https://www.linkedin.com/in/kashish-agarwal-ka02/",
-      image: "https://i.ibb.co/gZ0szHsD/kashish.jpg"
+      image: "https://www.pexels.com/photo/european-robin-perched-on-tree-branch-in-nature-32033989/"
     }
   ];
 
@@ -178,8 +178,7 @@ const Members = () => {
       role: "President",
       instagram: "http://instagram.com/beast_boyy_2310/",
       linkedin: "https://www.linkedin.com/in/nividsaxena/",
-      image: "https://imagekit.io/tools/asset-public-link?detail=%7B%22name%22%3A%22Nivid.png%22%2C%22type%22%3A%22image%2Fpng%22%2C%22signedurl_expire%22%3A%222028-05-13T18%3A32%3A41.484Z%22%2C%22signedUrl%22%3A%22https%3A%2F%2Fmedia-hosting.imagekit.io%2F2c73277f0e6044ab%2FNivid.png%3FExpires%3D1841855561%26Key-Pair-Id%3DK2ZIVPTIP2VGHC%26Signature%3D0lBqDiC-dzI2JkHa30XOUeH-QI2O3IMXtLp8H~pcT8wpNOr9u1lZl4pAyJmgqlDAh6Lpg12TjdhCf22sFAav5PnMFDgXZ0VtcOl-fwY9B3nq7lnkhwJDRQqnIk66AxAr3kTXmASH9psFeACrsGYpS4p4catRXplQDA54bbf2cvboNhrItcXmSjO19Nd38IUEkJnNcf2FIkfMWGmMoIakoLYxDV8IS5huNYQxTqfoG2ijg52jFxbn5vw~1emKjzmSgTOkhLhsVAaAq9Y1xZv5wbDgZdlCV-v18EvPJEfJ1x5jM157D6ZxUHCkMqpJ2qE84IzpNW7Ij4a9daMxMjyEFw__%22%7D"
-    },
+      image: "https://i.postimg.cc/6QSsDLJP/Nivid.png"
     {
       name: "Love Soni",
       role: "Vice President",
