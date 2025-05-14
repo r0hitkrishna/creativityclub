@@ -9,11 +9,11 @@ interface DomainCardProps {
   title: string; // Title of the domain (e.g., DESIGN DOMAIN)
   domainHead: string; // Title for the domain head (random name)
   description: string; // Description of the domain
-  // Removed emoji as requested
+  imageUrl: string; // URL for the sample image
 }
 
 // Component to display a single Domain Card
-const DomainCard = ({ icon, title, domainHead, description }: DomainCardProps) => {
+const DomainCard = ({ icon, title, domainHead, description, imageUrl }: DomainCardProps) => {
   return (
     // Card styling with rounded corners and subtle background
     <Card className="bg-card/50 backdrop-blur-sm border-white/10 overflow-hidden h-full rounded-lg shadow-lg">
@@ -26,19 +26,18 @@ const DomainCard = ({ icon, title, domainHead, description }: DomainCardProps) =
           </div>
           {/* Domain Title */}
           <h3 className="text-xl font-serif">{title}</h3>
-          {/* Removed emoji */}
         </div>
 
         {/* Sample Image */}
-        {/* Added a placeholder image above the description */}
+        {/* Added a sample image from Unsplash above the description */}
         <div className="mb-4">
            <img
-            src="https://placehold.co/400x200/8A2BE2/FFFFFF?text=Sample+Image" // Placeholder image URL
+            src={imageUrl} // Use the image URL from the data
             alt={`Sample image for ${title}`}
-            className="w-full h-auto rounded-md"
+            className="w-full h-auto rounded-md object-cover" // Added object-cover for better image fitting
+            style={{ maxHeight: '200px' }} // Optional: Limit image height for consistency
           />
         </div>
-
 
         {/* Domain Head Title */}
         {/* Added the domainHead title above the description */}
@@ -57,45 +56,45 @@ const Domains = () => {
   const domainData = [
     {
       title: "DESIGN DOMAIN",
-      domainHead: "Alex Creative", // Sample random name
+      domainHead: "Anushka Chandergi", // Sample random name
       description: "The visual brain of the club! From posters to merch, this team turns ideas into eye-catching designs that speak for the club.",
-      // Removed emoji: "耳",
-      icon: <Palette className="h-6 w-6 text-primary" />
+      icon: <Palette className="h-6 w-6 text-primary" />,
+      imageUrl: "https://images.unsplash.com/photo-1496262966056-33c82413524c?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Sample Design image
     },
     {
       title: "FINANCE DOMAIN",
-      domainHead: "Ben Ledger", // Sample random name
+      domainHead: "Parth Khandelwal", // Sample random name
       description: "The money minds! They handle budgets, sponsorships, and make sure every rupee is smartly spent and tracked.",
-      // Removed emoji: "跳",
-      icon: <Coins className="h-6 w-6 text-primary" />
+      icon: <Coins className="h-6 w-6 text-primary" />,
+      imageUrl: "https://images.unsplash.com/photo-1563986768494-4ce2cd182f02?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Sample Finance image
     },
     {
       title: "EDITORIAL DOMAIN",
-      domainHead: "Chloe Wordsmith", // Sample random name
+      domainHead: "Haritha Nivrithi", // Sample random name
       description: "Where word magic happens! From quirky captions to event write-ups, this team adds the sparkle to all things written.",
-      // Removed emoji: "槙",
-      icon: <Pencil className="h-6 w-6 text-primary" />
+      icon: <Pencil className="h-6 w-6 text-primary" />,
+      imageUrl: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Sample Editorial image
     },
     {
       title: "EVENTS & OPERATIONS",
-      domainHead: "David Organizer", // Sample random name
+      domainHead: "Surbhi Raj & Pawan Kumar", // Sample random name
       description: "The action squad! They plan and execute everything from fests to casual meetups—bringing every event idea to life.",
-      // Removed emoji: "蒔",
-      icon: <Tent className="h-6 w-6 text-primary" />
+      icon: <Tent className="h-6 w-6 text-primary" />,
+      imageUrl: "https://images.unsplash.com/photo-1505237531087-d66f3a2f147a?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Sample Events image
     },
     {
       title: "LOGISTICS DOMAIN",
-      domainHead: "Eva Coordinator", // Sample random name
+      domainHead: "Shubh Kumar", // Sample random name
       description: "The behind-the-scenes heroes! They handle everything from resources to on-ground execution, ensuring smooth and stress-free events.",
-      // Removed emoji: "逃",
-      icon: <Package className="h-6 w-6 text-primary" />
+      icon: <Package className="h-6 w-6 text-primary" />,
+      imageUrl: "https://images.unsplash.com/photo-1587495984134-77202e289f0d?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Sample Logistics image
     },
     {
       title: "PR DOMAIN",
-      domainHead: "Finn Communicator", // Sample random name
+      domainHead: "Kashish Agarwal", // Sample random name
       description: "The voice of the club! They build our public presence, manage social media, and connect with sponsors and partners.",
-      // Removed emoji: "離",
-      icon: <Users className="h-6 w-6 text-primary" />
+      icon: <Users className="h-6 w-6 text-primary" />,
+      imageUrl: "https://images.unsplash.com/photo-1544006659-f0b21880ce51?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Sample PR image
     }
   ];
 
@@ -120,7 +119,7 @@ const Domains = () => {
                 title={domain.title}
                 domainHead={domain.domainHead} // Pass the domainHead
                 description={domain.description}
-                // Removed emoji prop
+                imageUrl={domain.imageUrl} // Pass the image URL
               />
             ))}
           </div>
