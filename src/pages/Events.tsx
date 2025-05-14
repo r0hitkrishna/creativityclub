@@ -15,14 +15,14 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 // Interface for a general event (used for upcoming events)
 interface EventCardProps {
-  id: string; // Added id for unique keys
+  id: string; // Unique identifier for the event
   title: string;
   date: string;
   time: string;
   description: string;
   image: string;
   link: string;
-  category: string;
+  category: string; // Category of the upcoming event (e.g., Workshop, Masterclass)
 }
 
 // Interface for previous events (based on the provided data structure)
@@ -30,7 +30,7 @@ interface PreviousEventProps {
   name: string;
   date: string;
   venue: string;
-  // eventType: string; // Removed as it's not consistently provided in previous event data descriptions
+  eventType: string; // Type of the previous event (e.g., Workshop, Competition, Stall)
   description: string;
   image: string;
 }
@@ -38,19 +38,19 @@ interface PreviousEventProps {
 // Component to display a card for an upcoming event
 const EventCard = ({ title, date, time, description, image, link, category }: EventCardProps) => {
   return (
-    // Card styling for upcoming events
-    <Card className="overflow-hidden bg-card/50 backdrop-blur-sm border-white/10 h-full flex flex-col">
+    // Card styling for upcoming events with rounded corners and subtle background
+    <Card className="overflow-hidden rounded-lg bg-card/50 backdrop-blur-sm border border-white/10 h-full flex flex-col shadow-lg">
+      {/* Event image with aspect ratio for consistent sizing */}
       <div className="relative h-48 overflow-hidden">
-        {/* Event image */}
         <img src={image} alt={title} className="w-full h-full object-cover" />
         {/* Event category badge */}
-        <div className="absolute top-0 right-0 bg-primary/80 text-white px-3 py-1 text-sm">
+        <div className="absolute top-2 right-2 bg-primary/80 text-white px-3 py-1 text-sm rounded-md">
           {category}
         </div>
       </div>
-      {/* Card content area */}
+      {/* Card content area with padding */}
       <CardContent className="p-6 flex-grow">
-        {/* Date and Time information */}
+        {/* Date and Time information with icons */}
         <div className="flex items-center gap-4 text-sm mb-3 text-muted-foreground">
           <div className="flex items-center">
             {/* Calendar icon */}
@@ -78,7 +78,7 @@ const EventCard = ({ title, date, time, description, image, link, category }: Ev
       </CardContent>
       {/* Card footer with a link/button */}
       <CardFooter className="p-6 pt-0">
-        <Button asChild className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+        <Button asChild className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md">
           <Link to={link}>View Details</Link>
         </Button>
       </CardFooter>
@@ -87,23 +87,23 @@ const EventCard = ({ title, date, time, description, image, link, category }: Ev
 };
 
 // Component to display a card for a previous event
-const PreviousEventCard = ({ name, date, venue, description, image }: PreviousEventProps) => {
+const PreviousEventCard = ({ name, date, venue, eventType, description, image }: PreviousEventProps) => {
   return (
-    // Card styling for previous events
-    <Card className="overflow-hidden bg-card/50 backdrop-blur-sm border-white/10 h-full flex flex-col">
+    // Card styling for previous events with rounded corners and subtle background
+    <Card className="overflow-hidden rounded-lg bg-card/50 backdrop-blur-sm border border-white/10 h-full flex flex-col shadow-lg">
+      {/* Event image */}
       <div className="relative h-48 overflow-hidden">
-        {/* Event image */}
         <img src={image} alt={name} className="w-full h-full object-cover" />
-        {/* Optional: Could add an event type badge here if data was available */}
-        {/* <div className="absolute top-0 right-0 bg-primary/80 text-white px-3 py-1 text-sm">
+         {/* Event type badge */}
+         <div className="absolute top-2 right-2 bg-primary/80 text-white px-3 py-1 text-sm rounded-md">
           {eventType}
-        </div> */}
+        </div>
       </div>
-      {/* Card content area */}
+      {/* Card content area with padding */}
       <CardContent className="p-6">
         {/* Event name */}
         <h3 className="text-xl font-serif mb-2">{name}</h3>
-        {/* Date and Venue information */}
+        {/* Date and Venue information with icons */}
         <div className="flex items-center gap-4 text-sm mb-3 text-muted-foreground">
           <div className="flex items-center">
             {/* Calendar icon */}
@@ -141,15 +141,17 @@ const VerticalEventSlider = ({ events }: { events: EventCardProps[] }) => {
         align: "start",
       }}
       orientation="vertical"
-      // Adjusted height to show part of the next/previous slide, typical for carousels
-      className="w-full h-[550px] md:h-[600px] lg:h-[650px]"
+      // Adjusted height again, trying to find a balance for 3 items with spacing.
+      // This might still require fine-tuning based on actual content.
+      className="w-full h-[1100px] md:h-[1150px] lg:h-[1200px]" // Further increased height
     >
       {/* Carousel content wrapper */}
       <CarouselContent className="h-full">
         {/* Map through the provided events and create a CarouselItem for each */}
         {events.map((event) => (
           // Each CarouselItem contains an EventCard
-          <CarouselItem key={event.id} className="basis-1/3"> {/* basis-1/3 attempts to show 3 items if container height allows */}
+          // Added py-2 for vertical padding between items
+          <CarouselItem key={event.id} className="py-2">
             <div className="p-2 h-full">
               <EventCard {...event} />
             </div>
@@ -178,7 +180,7 @@ const Events = () => {
       title: "Creative Writing Workshop",
       date: "June 15, 2025", // Updated year
       time: "3:00 PM",
-      description: "Join us for a workshop on creative writing techniques and storytelling.",
+      description: "Join us for a workshop on creative writing techniques and storytelling. This workshop will cover various aspects of creative writing, including character development, plot construction, and dialogue writing. Whether you are a beginner or an experienced writer, you will find something new to learn and explore in this interactive session. Don't miss this opportunity to hone your writing skills and unleash your creativity!",
       image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1073&q=80",
       category: "Workshop",
       type: "upcoming",
@@ -189,24 +191,34 @@ const Events = () => {
       title: "Digital Art Masterclass",
       date: "June 22, 2025", // Updated year
       time: "4:30 PM",
-      description: "Learn digital art techniques from professional artists.",
+      description: "Learn digital art techniques from professional artists. This masterclass is designed for artists of all levels who want to explore the world of digital painting and illustration. Our experienced instructors will guide you through the process, from setting up your digital canvas to mastering various brushes and tools. Get ready to create stunning digital artworks and take your art to the next level!",
       image: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       category: "Masterclass",
       type: "upcoming",
       link: "#" // Placeholder link
     },
+     {
+      id: "upcoming-4",
+      title: "Poetry Slam Night",
+      date: "July 18, 2025",
+      time: "7:00 PM",
+      description: "Express yourself through spoken word at our open mic poetry slam night. Share your original poems or simply enjoy listening to the powerful voices of our community. All styles and themes are welcome. Come and be a part of this evening of raw emotion and creative expression!",
+      image: "https://images.unsplash.com/photo-1470091688026-38b51162c8df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80",
+      category: "Performance",
+      type: "upcoming",
+      link: "#" // Placeholder link
+    },
     {
-      id: "upcoming-3",
-      title: "Photography Basics",
-      date: "July 5, 2025", // Updated year
-      time: "2:00 PM",
-      description: "Learn the fundamentals of photography and composition.",
-      image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
+      id: "upcoming-5",
+      title: "Sculpture Workshop",
+      date: "August 10, 2025",
+      time: "1:00 PM",
+      description: "Explore the art of three-dimensional creation in our hands-on sculpture workshop. Learn basic sculpting techniques and create your own masterpiece. Materials will be provided. Unleash your inner sculptor and bring your ideas to life!",
+      image: "https://images.unsplash.com/photo-1534250371915-da6263032b9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       category: "Workshop",
       type: "upcoming",
       link: "#" // Placeholder link
     },
-     // Add more upcoming events here if needed, they will appear in the grid below the slider
 
     // Previous Events (using the data you provided)
     {
@@ -214,6 +226,7 @@ const Events = () => {
       name: "TWIST A TALE",
       date: "March 7",
       venue: "Ambedkar Auditorium",
+      eventType: "Workshop", // Added event type
       description: "Dive into the world of imagination with us at our \"Twist a Tale\" event! Let's paint stories with words and create memories that last a lifetime. Join us for an evening of magic and wonder!",
       image: "https://i.postimg.cc/Z58cYrXh/Whats-App-Image-2025-05-14-at-5-05-35-PM-2.jpg",
       type: "past"
@@ -223,6 +236,7 @@ const Events = () => {
       name: "ICE BREAKING SESSION",
       date: "April 21",
       venue: "GOOGLE MEET",
+      eventType: "Session", // Added event type
       description: "Get ready to break the ice and shake off any awkwardness with the club's very official ice-breaking session extravaganza! We're bringing the fun with a lineup of hilarious games, wacky challenges, and interactive activities while introducing you to the nuance of the Creativity Club, that'll have you laughing, bonding, and making memories in no time.",
       image: "https://placehold.co/600x400/000000/FFFFFF?text=Placeholder+Image", // Using a placeholder as no image link was provided
       type: "past"
@@ -232,6 +246,7 @@ const Events = () => {
       name: "FRIENDSHIP DAY",
       date: "4th August, 2024",
       venue: "Opp SMV",
+      eventType: "Event", // Added event type
       description: "Get ready to celebrate the best thing in life—friendship!💖 Join us for a day filled with laughter, unforgettable memories, and great fun! We've got refreshing activities lined up like twister and heads up, face painting😶‍🌫 and a Photo Booth📸 to capture your memories and a whole lot of joy. 🥳💫",
       image: "https://i.postimg.cc/1zMrwy9C/Whats-App-Image-2025-05-14-at-5-05-35-PM-1.jpg",
       type: "past"
@@ -241,6 +256,7 @@ const Events = () => {
       name: "CID",
       date: "Aug 11",
       venue: "Kamraj",
+      eventType: "Competition", // Added event type
       description: "🕵‍♀🌌 A chilling data breach has unleashed a wave of darkness. The deeper you probe, the more unsettling truths you'll uncover. Are you prepared to confront the darkness and reveal what lies hidden? 🕵‍♀💼 The digital realm is cloaked in darkness, and the secrets are buried deep🤐🌃. Prepare for an immersive journey through a web of intrigue and deception where every moment is crucial. Follow the trail of cryptic hints and uncover the truth lurking in the shadows. 🧐🕵‍♀",
       image: "https://i.postimg.cc/QMjqFFrK/Whats-App-Image-2025-05-14-at-5-05-35-PM.jpg",
       type: "past"
@@ -250,6 +266,7 @@ const Events = () => {
       name: "CASA",
       date: "Aug 13",
       venue: "MB210",
+      eventType: "Workshop", // Added event type
       description: "From the shadows of substance abuse to the light of new possibilities. 🌅 Join us at Hopeful Horizons, where resilience meets hope, as we stand together, overcoming addiction and forging paths to brighter futures.✨",
       image: "https://i.postimg.cc/yYSjtqPx/Whats-App-Image-2025-05-14-at-5-05-34-PM-1.jpg",
       type: "past"
@@ -259,6 +276,7 @@ const Events = () => {
       name: "DESIGN ALCHEMY",
       date: "Oct 4",
       venue: "Kamraj Auditorium",
+      eventType: "Workshop", // Added event type
       description: "From concept to clickable! 🎯 Step into our hands-on workshop, 'Design Alchemy: Figma Fundamentals', where your ideas come to life. Ready to unleash your creativity and craft stunning designs?",
       image: "https://i.postimg.cc/13hBZWCH/Whats-App-Image-2025-05-14-at-5-05-34-PM.jpg",
       type: "past"
@@ -268,6 +286,7 @@ const Events = () => {
       name: "SDG FUTURE FORWARD",
       date: "Oct 8",
       venue: "SMV 209",
+      eventType: "Workshop", // Added event type
       description: "Step into a world where bold ideas meet green innovation! Join us for 'Future Forward: Towards a Greener Tomorrow', as we embark on an exploration of the Sustainable Development Goals under visionary guidance.",
       image: "https://i.postimg.cc/Y9n8KMZG/Whats-App-Image-2025-05-14-at-5-05-33-PM-2.jpg",
       type: "past"
@@ -277,6 +296,7 @@ const Events = () => {
       name: "LIGHT THE WAY",
       date: "Oct 9",
       venue: "Greenos",
+      eventType: "Event", // Added event type
       description: "Get ready to illuminate your mind!🌟 Join us in celebrating mental health with creativity and connection!🙌✨ Explore our fun stalls filled with surprises and artistic delights.🎪❤ Let's shine a light on mental well-being together. 💫",
       image: "https://i.postimg.cc/268TKVcN/Whats-App-Image-2025-05-14-at-5-05-33-PM-1.jpg",
       type: "past"
@@ -286,6 +306,7 @@ const Events = () => {
       name: "MISSION MILKYWAY",
       date: "Oct 10",
       venue: "MB 210",
+      eventType: "Competition", // Added event type
       description: "Join us for an out-of-this-world☄event this space week and blow some steam off at Mission Milkyway 🚀 Gather up your crew and prepare for some fun yet competitive games and challenges, but don't float out too far, make sure to make it back to Earth in time for CATs 😉 #SpaceWeek #VITV",
       image: "https://i.postimg.cc/G3fzX3v6/Whats-App-Image-2025-05-14-at-5-05-33-PM.jpg",
       type: "past"
@@ -295,6 +316,7 @@ const Events = () => {
       name: "PILLOW FIGHT",
       date: "21-22 FEB",
       venue: "Woodys",
+      eventType: "Competition", // Added event type
       description: "luff flies, cheers ignite—who will stand tall in this feathery fight? Not all battles need armor and swords—some just need the perfect swing. 🛡⚔ Brace yourself for a showdown where quick reflexes and fearless strikes will decide the last one standing. 🫣🪶",
       image: "https://i.postimg.cc/5yXgfDWP/Whats-App-Image-2025-05-14-at-5-05-29-PM.jpg",
       type: "past"
@@ -304,7 +326,8 @@ const Events = () => {
       name: "SHENANIGANS",
       date: "8 MARCH",
       venue: "Opp SMV",
-      description: "Glitz, glam, and a little spree, SHE-NANIGANS is the place to be! 💃🏻✨ A day to celebrate strength, resilience, and the unstoppable spirit of women! From laughter-filled moments to inspiring conversations, let's come together to uplift, empower, and embrace the magic we bring to the world. 🩷🎀 Whether you're here to express, explore, or simply enjoy the vibes, this is your time to shine! 🌸✨",
+      eventType: "Event", // Added event type
+      description: "Glitz, glam, and a little spree, SHE-NANIGANS is the place to be! 💃🏻✨ A day to celebrate strength, resilience, and the unstoppable spirit of women! From laughter-filled moments to inspiring conversations, let's come together to uplift, empower, and embrace the magic we bring to the world. 🩷🎀 Whether you're here to express, explore, or simply enjoy the vibes, this is your time to shine!🌸✨",
       image: "https://i.postimg.cc/hGn2VCVj/Whats-App-Image-2025-05-14-at-5-05-26-PM.jpg",
       type: "past"
     }
@@ -393,7 +416,7 @@ const Events = () => {
                     name={event.name}
                     date={event.date}
                     venue={event.venue}
-                    // eventType={event.eventType} // eventType removed from PreviousEventProps
+                    eventType={event.eventType} // Pass eventType
                     description={event.description}
                     image={event.image}
                   />
