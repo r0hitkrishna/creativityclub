@@ -116,16 +116,16 @@ const DomainCard = ({ icon, title, description, emoji }: { icon: React.ReactNode
 
 const Home = () => {
   const sliderImages = [
-    "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1513364776144-60967b0f800f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1470091688026-38b51162c8df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1455390582262-044cdead277a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://i.postimg.cc/Z58cYrXh/Whats-App-Image-2025-05-14-at-5-05-35-PM-2.jpg",
-    "https://i.postimg.cc/1zMrwy9C/Whats-App-Image-2025-05-14-at-5-05-35-PM-1.jpg",
-    "https://i.postimg.cc/QMjqFFrK/Whats-App-Image-2025-05-14-at-5-05-35-PM.jpg",
-    "https://i.postimg.cc/yYSjtqPx/Whats-App-Image-2025-05-14-at-5-05-34-PM-1.jpg",
-    "https://i.postimg.cc/13hBZWCH/Whats-App-Image-2025-05-14-at-5-05-34-PM.jpg"
+    "https://i.postimg.cc/jSkvgnRF/pic10.jpg",
+    "https://i.postimg.cc/N0MSLwjW/pic9.jpg",
+    "https://i.postimg.cc/0yt7kT3M/pic8.jpg",
+    "https://i.postimg.cc/gkgWNsQq/pic7.jpg",
+    "https://i.postimg.cc/6TJ9wpVV/pic6.jpg",
+    "https://i.postimg.cc/zDpSBH4P/pic5.jpg",
+    "https://i.postimg.cc/jjvBvSLg/pic4.jpg",
+    "https://i.postimg.cc/dt139h3X/pic3.jpg",
+    "https://i.postimg.cc/dVsB6mrF/pic2.jpg",
+    "https://i.postimg.cc/90DR801c/pic1.jpg"
   ];
 
   const domainData = [
