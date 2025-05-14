@@ -1,8 +1,16 @@
 
-import HeroSection from "@/components/HeroSection";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { 
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious
+} from "@/components/ui/carousel";
+import { Card, CardContent } from "@/components/ui/card";
+import { Palette, Coins, Pencil, Tent, Package, Users } from "lucide-react";
 
 const FeatureCard = ({ 
   title, 
@@ -89,17 +97,152 @@ const UpcomingEvent = () => {
   );
 };
 
+const DomainCard = ({ icon, title, description, emoji }: { icon: React.ReactNode, title: string, description: string, emoji: string }) => {
+  return (
+    <Card className="bg-card/50 backdrop-blur-sm border-white/10 overflow-hidden h-full">
+      <CardContent className="p-6 flex flex-col h-full">
+        <div className="flex items-center justify-between mb-4">
+          <div className="h-12 w-12 rounded-full bg-primary/20 flex items-center justify-center">
+            {icon}
+          </div>
+          <span className="text-2xl">{emoji}</span>
+        </div>
+        <h3 className="text-xl font-serif mb-2">{title}</h3>
+        <p className="text-muted-foreground">{description}</p>
+      </CardContent>
+    </Card>
+  );
+};
+
 const Home = () => {
+  const sliderImages = [
+    "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1513364776144-60967b0f800f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1470091688026-38b51162c8df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1455390582262-044cdead277a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://i.postimg.cc/Z58cYrXh/Whats-App-Image-2025-05-14-at-5-05-35-PM-2.jpg",
+    "https://i.postimg.cc/1zMrwy9C/Whats-App-Image-2025-05-14-at-5-05-35-PM-1.jpg",
+    "https://i.postimg.cc/QMjqFFrK/Whats-App-Image-2025-05-14-at-5-05-35-PM.jpg",
+    "https://i.postimg.cc/yYSjtqPx/Whats-App-Image-2025-05-14-at-5-05-34-PM-1.jpg",
+    "https://i.postimg.cc/13hBZWCH/Whats-App-Image-2025-05-14-at-5-05-34-PM.jpg"
+  ];
+
+  const domainData = [
+    {
+      title: "DESIGN DOMAIN",
+      description: "The visual brain of the club! From posters to merch, this team turns ideas into eye-catching designs that speak for the club.",
+      emoji: "🎨",
+      icon: <Palette className="h-6 w-6 text-primary" />
+    },
+    {
+      title: "FINANCE DOMAIN",
+      description: "The money minds! They handle budgets, sponsorships, and make sure every rupee is smartly spent and tracked.",
+      emoji: "💵",
+      icon: <Coins className="h-6 w-6 text-primary" />
+    },
+    {
+      title: "EDITORIAL DOMAIN",
+      description: "Where word magic happens! From quirky captions to event write-ups, this team adds the sparkle to all things written.",
+      emoji: "🖊",
+      icon: <Pencil className="h-6 w-6 text-primary" />
+    }
+  ];
+
   return (
     <>
-      <HeroSection
-        title="Explore Your Magic"
-        subtitle="Unlock your creative potential through art, writing, and collaborative magic. Join our community of imaginative souls."
-        primaryButtonText="Join Us"
-        primaryButtonLink="/about"
-        secondaryButtonText="Explore Events"
-        secondaryButtonLink="/events"
-      />
+      <section className="relative min-h-[80vh] flex flex-col items-center pt-20 pb-10 px-4">
+        <div className="max-w-7xl mx-auto relative z-10 text-center">
+          <div className="sparkling absolute top-5 left-1/4"></div>
+          <div className="sparkling absolute bottom-10 right-1/3"></div>
+          
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif font-semibold mb-6 bg-clip-text text-transparent bg-magic-gradient relative">
+            Explore Your Magic
+          </h1>
+
+          <div className="my-8 max-w-4xl mx-auto">
+            <Carousel
+              opts={{
+                align: "center",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent>
+                {sliderImages.map((image, index) => (
+                  <CarouselItem key={index}>
+                    <div className="p-1">
+                      <div className="overflow-hidden rounded-xl">
+                        <img 
+                          src={image} 
+                          alt={`Creativity Club ${index + 1}`} 
+                          className="aspect-[16/9] object-cover w-full h-full"
+                        />
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <div className="flex items-center justify-between absolute top-1/2 -translate-y-1/2 left-0 right-0 px-4">
+                <CarouselPrevious className="relative" />
+                <CarouselNext className="relative" />
+              </div>
+            </Carousel>
+          </div>
+          
+          <p className="text-lg sm:text-xl max-w-2xl mx-auto mb-10 text-white/80">
+            Unlock your creative potential through art, writing, and collaborative magic. Join our community of imaginative souls.
+          </p>
+          
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Button
+              asChild
+              className="bg-gradient-to-r from-magic-purple to-magic-teal hover:opacity-90 text-white px-8 py-6 rounded-full text-lg font-medium"
+            >
+              <Link to="/about">Join Us</Link>
+            </Button>
+            
+            <Button
+              asChild
+              variant="outline"
+              className="bg-transparent border border-magic-gold/50 hover:bg-magic-gold/10 text-magic-gold px-8 py-6 rounded-full text-lg font-medium"
+            >
+              <Link to="/events">Explore Events</Link>
+            </Button>
+          </div>
+        </div>
+        
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent"></div>
+      </section>
+      
+      <section className="py-16 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-serif font-medium mb-4">Domains</h2>
+            <p className="text-lg max-w-2xl mx-auto text-muted-foreground mb-8">
+              Discover the different areas where our creativity thrives and projects come to life.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            {domainData.map((domain, index) => (
+              <DomainCard
+                key={index}
+                icon={domain.icon}
+                title={domain.title}
+                description={domain.description}
+                emoji={domain.emoji}
+              />
+            ))}
+          </div>
+          
+          <div className="text-center">
+            <Button asChild variant="outline" className="border-primary/50 hover:bg-primary/10 text-primary">
+              <Link to="/domains">Explore All Domains</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
       
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">

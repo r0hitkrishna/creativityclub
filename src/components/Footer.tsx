@@ -1,5 +1,6 @@
 
 import { Link } from 'react-router-dom';
+import { Instagram, Linkedin } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -26,6 +27,7 @@ const Footer = () => {
             <li><Link to="/" className="text-muted-foreground hover:text-white transition-colors">Home</Link></li>
             <li><Link to="/about" className="text-muted-foreground hover:text-white transition-colors">About</Link></li>
             <li><Link to="/events" className="text-muted-foreground hover:text-white transition-colors">Events</Link></li>
+            <li><Link to="/domains" className="text-muted-foreground hover:text-white transition-colors">Domains</Link></li>
             <li><Link to="/members" className="text-muted-foreground hover:text-white transition-colors">Members</Link></li>
             <li><Link to="/contact" className="text-muted-foreground hover:text-white transition-colors">Contact</Link></li>
             <li><Link to="/creators" className="text-muted-foreground hover:text-white transition-colors">Creators</Link></li>
@@ -52,7 +54,16 @@ const Footer = () => {
               className="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all"
             >
               <span className="sr-only">Instagram</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+              <Instagram className="h-5 w-5" />
+            </a>
+            <a 
+              href="https://www.linkedin.com/company/creativity-club-vit/" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all"
+            >
+              <span className="sr-only">LinkedIn</span>
+              <Linkedin className="h-5 w-5" />
             </a>
           </div>
           <p className="text-muted-foreground text-sm">
