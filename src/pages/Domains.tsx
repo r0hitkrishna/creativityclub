@@ -56,7 +56,7 @@ const Domains = () => {
   const domainData = [
     {
       title: "DESIGN DOMAIN",
-      domainHead: "Alex Creative", // Sample random name
+      domainHead: "Anushka Chandergi", // Sample random name
       description: "The visual brain of the club! From posters to merch, this team turns ideas into eye-catching designs that speak for the club.",
       icon: <Palette className="h-6 w-6 text-primary" />,
       // Using a reliable placeholder image
@@ -64,7 +64,7 @@ const Domains = () => {
     },
     {
       title: "FINANCE DOMAIN",
-      domainHead: "Ben Ledger", // Sample random name
+      domainHead: "Parth Khandelwal", // Sample random name
       description: "The money minds! They handle budgets, sponsorships, and make sure every rupee is smartly spent and tracked.",
       icon: <Coins className="h-6 w-6 text-primary" />,
       // Using a reliable placeholder image
@@ -72,7 +72,7 @@ const Domains = () => {
     },
     {
       title: "EDITORIAL DOMAIN",
-      domainHead: "Chloe Wordsmith", // Sample random name
+      domainHead: "Haritha Nivrithi", // Sample random name
       description: "Where word magic happens! From quirky captions to event write-ups, this team adds the sparkle to all things written.",
       icon: <Pencil className="h-6 w-6 text-primary" />,
       // Using a reliable placeholder image
@@ -80,7 +80,7 @@ const Domains = () => {
     },
     {
       title: "EVENTS & OPERATIONS",
-      domainHead: "David Organizer", // Sample random name
+      domainHead: "Surbhi Raj & Pawan Kumar", // Sample random name
       description: "The action squad! They plan and execute everything from fests to casual meetups—bringing every event idea to life.",
       icon: <Tent className="h-6 w-6 text-primary" />,
       // Using a reliable placeholder image
@@ -88,7 +88,7 @@ const Domains = () => {
     },
     {
       title: "LOGISTICS DOMAIN",
-      domainHead: "Eva Coordinator", // Sample random name
+      domainHead: "Shubh Kumar", // Sample random name
       description: "The behind-the-scenes heroes! They handle everything from resources to on-ground execution, ensuring smooth and stress-free events.",
       icon: <Package className="h-6 w-6 text-primary" />,
       // Using a reliable placeholder image
@@ -96,7 +96,7 @@ const Domains = () => {
     },
     {
       title: "PR DOMAIN",
-      domainHead: "Finn Communicator", // Sample random name
+      domainHead: "Kashish Agarwal", // Sample random name
       description: "The voice of the club! They build our public presence, manage social media, and connect with sponsors and partners.",
       icon: <Users className="h-6 w-6 text-primary" />,
       // Using a reliable placeholder image
