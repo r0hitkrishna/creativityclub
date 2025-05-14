@@ -210,7 +210,7 @@ const Members = () => {
       role: "President",
       instagram: "http://instagram.com/beast_boyy_2310/",
       linkedin: "https://www.linkedin.com/in/nividsaxena/",
-      image: "https://i.postimg.cc/6QSsDLJP/Nivid.png"
+      image: "https://i.postimg.cc/BnRjMmTL/IMG-20250515-WA0004.jpg"
     },
     {
       name: "Love Soni",
