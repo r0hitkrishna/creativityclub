@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
@@ -35,8 +34,7 @@ const CreatorProfile = ({ name, role, image, bio, linkedin, instagram, dribbble 
             {/* HoverCard for displaying bio on hover */}
             <HoverCard>
               <HoverCardTrigger asChild>
-                {/* Avatar component - Increased size and ensured square shape */}
-                {/* Changed h-24 w-24 to h-36 w-36 for a larger square */}
+                {/* Avatar component - square shape */}
                 <Avatar className="h-36 w-36 border-2 border-white/10">
                   {image ? (
                     // Display image if available
@@ -102,7 +100,7 @@ const CreatorProfile = ({ name, role, image, bio, linkedin, instagram, dribbble 
                 className="inline-flex items-center justify-center px-3 py-1 text-sm rounded-md bg-white/10 hover:bg-white/20 transition-all text-muted-foreground hover:text-white"
                  aria-label={`${name} on Instagram`}
               >
-                {/* Instagram Icon SVG (simple outline) */}
+                {/* Instagram Icon SVG */}
                 <svg
                   className="w-4 h-4"
                   xmlns="http://www.w3.org/2000/svg"
@@ -129,7 +127,7 @@ const CreatorProfile = ({ name, role, image, bio, linkedin, instagram, dribbble 
                 className="inline-flex items-center justify-center px-3 py-1 text-sm rounded-md bg-white/10 hover:bg-white/20 transition-all text-muted-foreground hover:text-white"
                  aria-label={`${name} on Dribbble`}
               >
-                {/* Dribbble Icon SVG (simple outline) */}
+                {/* Dribbble Icon SVG */}
                  <svg
                     className="w-4 h-4"
                     xmlns="http://www.w3.org/2000/svg"
@@ -160,106 +158,94 @@ const Creators = () => {
   const creators: CreatorProps[] = [
     {
       name: "Rohit Krishna",
-      role: "Project Lead and Ex-Design Head", // Updated role
+      role: "Project Lead and Ex-Design Head",
       bio: "Led the project development and previously served as the Design Head. Specializes in digital art, UI/UX design, and project management.",
-      // Sample image for Rohit Krishna
       image: "https://images.unsplash.com/photo-1564564321837-a57b7070ac9f?auto=format&fit=crop&q=80&w=1780&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      linkedin: "#", // Placeholder LinkedIn
-      instagram: "#", // Placeholder Instagram
-      dribbble: "#" // Placeholder Dribbble
+      linkedin: "#",
+      instagram: "#",
+      dribbble: "#"
     },
     {
       name: "Shriya Garg",
-      role: "Vice President & Project Manager", // Role remains the same
+      role: "Vice President & Project Manager",
       bio: "Oversaw the project management aspects of the website development. Coordinated with team members and ensured project milestones were met.",
-      // Sample image for Shriya Garg
       image: "https://images.unsplash.com/photo-1531123897727-8f129e1687cd?auto=format&fit=crop&q=80&w=1780&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      linkedin: "#", // Placeholder LinkedIn
-      instagram: "#" // Placeholder Instagram
+      linkedin: "#",
+      instagram: "#"
     },
     {
       name: "Parth Khandelwal",
-      role: "Finance Head & Developer", // Role remains the same
+      role: "Finance Head & Developer",
       bio: "Combines financial expertise with web development skills. Led the financial planning and contributed to the development of the Creativity Club website.",
-      // Sample image for Parth Khandelwal
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=1780&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      linkedin: "#", // Placeholder LinkedIn
-      instagram: "#" // Placeholder Instagram
+      linkedin: "#",
+      instagram: "#"
     },
     {
       name: "Anushka Chandergi",
-      role: "Design Head & UI Developer", // Role remains the same
+      role: "Design Head & UI Developer",
       bio: "Contributed to the design implementation and front-end development. Created visual assets and helped structure the user interface elements.",
-      // Sample image for Anushka Chandergi
       image: "https://images.unsplash.com/photo-1594744803329-e519c265e10b?auto=format&fit=crop&q=80&w=1780&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      linkedin: "#", // Placeholder LinkedIn
-      instagram: "#" // Placeholder Instagram
+      linkedin: "#",
+      instagram: "#"
     },
     {
       name: "Veda Chandergi",
-      role: "General Secretary & Content Manager", // Role remains the same
+      role: "General Secretary & Content Manager",
       bio: "Managed content creation and organization for the website. Ensured all information was accurate and effectively communicated.",
-      // Sample image for Veda Chandergi
       image: "https://images.unsplash.com/photo-1580489944761-c4337a53e2b1?auto=format&fit=crop&q=80&w=1780&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      linkedin: "#", // Placeholder LinkedIn
-      instagram: "#" // Placeholder Instagram
+      linkedin: "#",
+      instagram: "#"
     },
-    // Added new creators with sample images
     {
       name: "Haritha Nivrithi",
       role: "Content Writer & Editor",
       bio: "Crafted engaging content and ensured editorial quality for the website.",
-      // Sample image for Haritha Nivrithi
       image: "https://images.unsplash.com/photo-1520452101351-34e62b62b85a?auto=format&fit=crop&q=80&w=1780&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      linkedin: "#", // Placeholder LinkedIn
-      instagram: "#" // Placeholder Instagram
+      linkedin: "#",
+      instagram: "#"
     },
     {
       name: "Suhani Balchandani",
       role: "Tester & Editor",
       bio: "Ensured the website was bug-free and contributed to content editing.",
-      // Sample image for Suhani Balchandani
       image: "https://images.unsplash.com/photo-1508214751196-cdfd46dac9f5?auto=format&fit=crop&q=80&w=1780&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      linkedin: "#", // Placeholder LinkedIn
-      instagram: "#" // Placeholder Instagram
+      linkedin: "#",
+      instagram: "#"
     },
     {
       name: "Aayush Raj",
       role: "Developer & Tester",
       bio: "Contributed to the website's development and testing processes.",
-      // Sample image for Aayush Raj
       image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=1780&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      linkedin: "#", // Placeholder LinkedIn
-      instagram: "#" // Placeholder Instagram
+      linkedin: "#",
+      instagram: "#"
     }
   ];
 
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-7xl mx-auto">
-        {/* Back to Home link */}
-        <div className="flex items-center mb-12">
-          <Link
-            to="/"
-            className="flex items-center text-muted-foreground hover:text-white transition-all group mr-4"
-          >
-            <ArrowLeft className="h-4 w-4 mr-1 group-hover:-translate-x-1 transition-transform" />
-            Back to Home
-          </Link>
-
-          {/* Page Title */}
-          <h1 className="text-4xl md:text-5xl font-serif">
+        {/* Header section with improved back button positioning */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
+          <h1 className="text-4xl md:text-5xl font-serif mb-4 md:mb-0">
             <span className="text-gradient-primary">Creators</span>
           </h1>
+          
+          <Link
+            to="/"
+            className="inline-flex items-center px-4 py-2 text-sm rounded-md bg-white/5 hover:bg-white/10 transition-all text-muted-foreground hover:text-white"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2 transition-transform group-hover:-translate-x-1" />
+            Back to Home
+          </Link>
         </div>
 
         {/* Introductory paragraph */}
-        <div className="mb-12">
-          <p className="text-xl text-muted-foreground max-w-3xl">
-            Meet the brilliant minds behind the Creativity Club website — a vibrant digital 
-            space crafted through their creativity, technical expertise, and passion.
-          </p>
-        </div>
+        <p className="text-xl text-muted-foreground max-w-3xl">
+          Meet the brilliant minds behind the Creativity Club website — a vibrant digital 
+          space crafted through their creativity, technical expertise, and passion.
+        </p>
 
         {/* Grid to display creator profiles */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -270,7 +256,7 @@ const Creators = () => {
         </div>
       </div>
 
-      {/* Sparkling effects (assuming these are styled elsewhere) */}
+      {/* Sparkling effects */}
       <div className="sparkling absolute top-1/3 left-1/4"></div>
       <div className="sparkling absolute bottom-1/4 right-1/3"></div>
     </div>

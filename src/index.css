@@ -54,6 +54,9 @@
     background-size: 100% 100%;
     background-position: 0px 0px;
     background-repeat: no-repeat;
+    position: relative;
+    overflow-x: hidden;
+    cursor: default; /* Set default cursor */
   }
 
   h1, h2, h3.fancy-title {
@@ -69,6 +72,89 @@
   }
 }
 
+/* Fluid elements that follow the cursor */
+.fluid-cursor {
+  position: fixed;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(126, 105, 171, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: -1;
+  transition: width 0.3s, height 0.3s;
+  opacity: 0.8;
+  will-change: transform;
+}
+
+.fluid-cursor-2 {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: -1;
+  transition: width 0.4s, height 0.4s;
+  opacity: 0.6;
+  will-change: transform;
+}
+
+.fluid-cursor-3 {
+  position: fixed;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(254, 198, 161, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: -1;
+  transition: width 0.2s, height 0.2s;
+  opacity: 0.7;
+  will-change: transform;
+}
+
+/* Card hover effect */
+.magical-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  backdrop-filter: blur(8px);
+  background: rgba(38, 30, 58, 0.6);
+  border: 1px solid rgba(126, 105, 171, 0.3);
+  box-shadow: 0 8px 32px rgba(14, 165, 233, 0.1);
+  transition: all 0.3s ease;
+}
+
+.magical-card:hover {
+  border: 1px solid rgba(254, 198, 161, 0.5);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(126, 105, 171, 0.2);
+}
+
+.magical-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  transition: all 0.75s ease;
+}
+
+.magical-card:hover::before {
+  left: 150%;
+}
+
+/* Original animations */
 .magic-border {
   position: relative;
   border-radius: 1rem;
@@ -179,42 +265,4 @@
   opacity: 0.5;
   pointer-events: none;
   z-index: -1;
-}
-
-.magical-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 1rem;
-  backdrop-filter: blur(8px);
-  background: rgba(38, 30, 58, 0.6);
-  border: 1px solid rgba(126, 105, 171, 0.3);
-  box-shadow: 0 8px 32px rgba(14, 165, 233, 0.1);
-  transition: all 0.3s ease;
-}
-
-.magical-card:hover {
-  border: 1px solid rgba(254, 198, 161, 0.5);
-  transform: translateY(-5px);
-  box-shadow: 0 12px 40px rgba(126, 105, 171, 0.2);
-}
-
-.magical-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -50%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.05) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  transform: skewX(-25deg);
-  transition: all 0.75s ease;
-}
-
-.magical-card:hover::before {
-  left: 150%;
 }

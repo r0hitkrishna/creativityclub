@@ -17,6 +17,8 @@ import Creators from "./pages/Creators";
 import Domains from "./pages/Domains";
 import NotFound from "./pages/NotFound";
 import Gallery from "./pages/Gallery";
+import Game2048 from "./pages/Game2048";
+import DinoGame from "./pages/DinoGame";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +41,8 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/creators" element={<Creators />} />
             <Route path="/gallery" element={<Gallery />} />
+            <Route path="/games/2048" element={<Game2048 />} />
+            <Route path="/games/dino" element={<DinoGame />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

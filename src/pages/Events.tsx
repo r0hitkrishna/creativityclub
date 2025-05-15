@@ -1,4 +1,3 @@
-
 import HeroSection from "@/components/HeroSection";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,8 +7,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious
 } from "@/components/ui/carousel";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
@@ -27,12 +24,14 @@ interface EventCardProps {
 
 // Interface for previous events (based on the provided data structure)
 interface PreviousEventProps {
+  id: string;
   name: string;
   date: string;
   venue: string;
   eventType: string; // Type of the previous event (e.g., Workshop, Competition, Stall)
   description: string;
   image: string;
+  type: string;
 }
 
 // Component to display a card for an upcoming event
@@ -104,7 +103,7 @@ const PreviousEventCard = ({ name, date, venue, eventType, description, image }:
         {/* Event name */}
         <h3 className="text-xl font-serif mb-2">{name}</h3>
         {/* Date and Venue information with icons */}
-        <div className="flex items-center gap-4 text-sm mb-3 text-muted-foreground">
+        <div className="flex flex-wrap items-center gap-4 text-sm mb-3 text-muted-foreground">
           <div className="flex items-center">
             {/* Calendar icon */}
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1 text-primary">
@@ -135,32 +134,13 @@ const PreviousEventCard = ({ name, date, venue, eventType, description, image }:
 // Vertical Slider component for featured upcoming events
 const VerticalEventSlider = ({ events }: { events: EventCardProps[] }) => {
   return (
-    // Carousel container configured for vertical orientation
-    <Carousel
-      opts={{
-        align: "start",
-      }}
-      orientation="vertical"
-      // Adjusted height again, trying to find a balance for 3 items with spacing.
-      // This might still require fine-tuning based on actual content.
-      className="w-full h-[1100px] md:h-[1150px] lg:h-[1200px]" // Further increased height
-    >
-      {/* Carousel content wrapper */}
-      <CarouselContent className="h-full">
-        {/* Map through the provided events and create a CarouselItem for each */}
-        {events.map((event) => (
-          // Each CarouselItem contains an EventCard
-          // Added py-2 for vertical padding between items
-          <CarouselItem key={event.id} className="py-2">
-            <div className="p-2 h-full">
-              <EventCard {...event} />
-            </div>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      {/* Carousel navigation buttons - REMOVED */}
-      {/* The navigation buttons are removed as requested */}
-    </Carousel>
+    <div className="flex flex-col gap-4 md:gap-6 lg:gap-8">
+      {events.map((event) => (
+        <div key={event.id} className="w-full">
+          <EventCard {...event} />
+        </div>
+      ))}
+    </div>
   );
 };
 
@@ -390,14 +370,15 @@ const Events = () => {
                 <h2 className="text-3xl sm:text-4xl font-serif font-medium mb-8 text-center">
                   Featured Upcoming Events
                 </h2>
-                {/* Vertical slider for featured upcoming events */}
-                {/* Pass the first 3 upcoming events to the slider */}
-                <VerticalEventSlider events={featuredUpcomingEvents} />
+                {/* Fixed vertical display for featured upcoming events */}
+                <div className="w-full max-w-2xl mx-auto">
+                  <VerticalEventSlider events={featuredUpcomingEvents} />
+                </div>
               </div>
 
               {/* Grid for Proposed events */}
               {/* Only show this section if there are proposed events (at least 3 upcoming events exist) */}
-              {proposedEvents.length > 0 && ( // Check if there are any proposed events
+              {proposedEvents.length > 0 && (
                 <div className="mt-16">
                   {/* Changed heading to Proposed Events */}
                   <h3 className="text-2xl font-serif font-medium mb-8 text-center">
@@ -431,15 +412,17 @@ const Events = () => {
               {/* Grid layout for previous events */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {/* Map through previous events and display them as cards */}
-                {previousEvents.map((event, index) => (
+                {previousEvents.map((event) => (
                   <PreviousEventCard
-                    key={event.name + index} // Using name and index as a key
+                    key={event.id}
+                    id={event.id}
                     name={event.name}
                     date={event.date}
                     venue={event.venue}
-                    eventType={event.eventType} // Pass eventType
+                    eventType={event.eventType}
                     description={event.description}
                     image={event.image}
+                    type={event.type}
                   />
                 ))}
               </div>
