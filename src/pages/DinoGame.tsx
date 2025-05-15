@@ -11,6 +11,10 @@ interface GameObject {
   width: number;
   height: number;
   speed?: number;
+  blinking?: boolean;
+  blinkState?: boolean;
+  type?: string;
+  wingUp?: boolean;
 }
 
 const DinoGame = () => {
