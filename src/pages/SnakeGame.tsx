@@ -1,555 +1,549 @@
-
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useToast } from "@/hooks/use-toast";
+import GameLayout from '@/components/GameLayout';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { toast } from '@/hooks/use-toast';
+import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Pause, Play, RotateCcw } from 'lucide-react';
 
-// Directions for the snake
-enum Direction {
-  UP = 'UP',
-  DOWN = 'DOWN',
-  LEFT = 'LEFT',
-  RIGHT = 'RIGHT',
-}
-
-// Cell types on the grid
-enum CellType {
-  EMPTY = 'EMPTY',
-  SNAKE = 'SNAKE',
-  FOOD = 'FOOD',
-  HEAD = 'HEAD',
-}
-
-// Grid cell representation
-interface Cell {
-  type: CellType;
-  x: number;
-  y: number;
-}
-
-// Snake segment
-interface SnakeSegment {
-  x: number;
-  y: number;
-}
-
+// Game constants
+const CELL_SIZE = 20;
 const GRID_SIZE = 20;
-const INITIAL_SNAKE_LENGTH = 3;
-const INITIAL_SPEED = 120; // ms per move
+const GRID_WIDTH = CELL_SIZE * GRID_SIZE;
+const GRID_HEIGHT = CELL_SIZE * GRID_SIZE;
+const INITIAL_SPEED = 150;
+
+// Direction types
+type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
+
+// Cell position type
+type CellPosition = {
+  x: number;
+  y: number;
+};
 
 const SnakeGame = () => {
-  const [grid, setGrid] = useState<Cell[][]>([]);
-  const [snake, setSnake] = useState<SnakeSegment[]>([]);
-  const [direction, setDirection] = useState<Direction>(Direction.RIGHT);
+  const { toast } = useToast();
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
-  const [gameStarted, setGameStarted] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  const [gameSpeed, setGameSpeed] = useState(INITIAL_SPEED);
-  const [foodPosition, setFoodPosition] = useState<{ x: number; y: number } | null>(null);
-  const [difficulty, setDifficulty] = useState<'Easy' | 'Medium' | 'Hard'>('Medium');
-  
-  // Refs for game loop
-  const directionRef = useRef(direction);
-  const gameOverRef = useRef(gameOver);
-  const isPausedRef = useRef(isPaused);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Load high score on mount
+  // Game state refs (to avoid issues with closures in event listeners)
+  const snakeRef = useRef<CellPosition[]>([
+    { x: 10, y: 10 },
+    { x: 9, y: 10 },
+    { x: 8, y: 10 }
+  ]);
+  const foodRef = useRef<CellPosition>({ x: 15, y: 10 });
+  const directionRef = useRef<Direction>('RIGHT');
+  const speedRef = useRef(INITIAL_SPEED);
+  const gameLoopRef = useRef<number | null>(null);
+
+  // Detect mobile device
   useEffect(() => {
-    const savedHighScore = localStorage.getItem('snakeHighScore');
-    if (savedHighScore) {
-      setHighScore(parseInt(savedHighScore));
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Initialize high score from local storage
+  useEffect(() => {
+    const storedHighScore = localStorage.getItem('snakeHighScore');
+    if (storedHighScore) {
+      setHighScore(parseInt(storedHighScore));
     }
   }, []);
 
-  // Update refs when states change
-  useEffect(() => {
-    directionRef.current = direction;
-  }, [direction]);
-
-  useEffect(() => {
-    gameOverRef.current = gameOver;
-  }, [gameOver]);
-
-  useEffect(() => {
-    isPausedRef.current = isPaused;
-  }, [isPaused]);
-
-  // Handle key presses
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.code === 'Space') {
-        if (!gameStarted || gameOver) {
-          startGame();
-        } else {
-          setIsPaused(prev => !prev);
+  // Generate food at a random position
+  const generateFood = useCallback(() => {
+    const snake = snakeRef.current;
+    let newFood: CellPosition;
+    let foodOnSnake: boolean;
+    
+    // Keep generating food until it's not on the snake
+    do {
+      foodOnSnake = false;
+      newFood = {
+        x: Math.floor(Math.random() * GRID_SIZE),
+        y: Math.floor(Math.random() * GRID_SIZE)
+      };
+      
+      // Check if food is on snake
+      for (let segment of snake) {
+        if (segment.x === newFood.x && segment.y === newFood.y) {
+          foodOnSnake = true;
+          break;
         }
+      }
+    } while (foodOnSnake);
+    
+    foodRef.current = newFood;
+  }, []);
+
+  // Draw the game
+  const draw = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    
+    // Clear canvas
+    ctx.clearRect(0, 0, GRID_WIDTH, GRID_HEIGHT);
+    
+    // Draw background grid
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+    for (let x = 0; x < GRID_SIZE; x++) {
+      for (let y = 0; y < GRID_SIZE; y++) {
+        if ((x + y) % 2 === 0) {
+          ctx.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+        }
+      }
+    }
+    
+    // Draw snake
+    const snake = snakeRef.current;
+    ctx.fillStyle = '#9b87f5'; // Primary purple
+    
+    snake.forEach((segment, index) => {
+      // Draw snake body with gradient effect
+      const opacity = 1 - (index / snake.length) * 0.6;
+      ctx.fillStyle = `rgba(155, 135, 245, ${Math.max(0.4, opacity)})`;
+      
+      // Head is slightly bigger than body
+      if (index === 0) {
+        const padding = 1;
+        ctx.fillRect(
+          segment.x * CELL_SIZE + padding,
+          segment.y * CELL_SIZE + padding,
+          CELL_SIZE - padding * 2,
+          CELL_SIZE - padding * 2
+        );
+      } else {
+        const padding = 2;
+        ctx.fillRect(
+          segment.x * CELL_SIZE + padding,
+          segment.y * CELL_SIZE + padding,
+          CELL_SIZE - padding * 2,
+          CELL_SIZE - padding * 2
+        );
+      }
+    });
+    
+    // Draw eyes on snake head
+    const head = snake[0];
+    const eyeSize = 3;
+    ctx.fillStyle = 'white';
+    
+    // Position eyes based on direction
+    if (directionRef.current === 'UP') {
+      ctx.fillRect(head.x * CELL_SIZE + 5, head.y * CELL_SIZE + 5, eyeSize, eyeSize);
+      ctx.fillRect(head.x * CELL_SIZE + CELL_SIZE - 8, head.y * CELL_SIZE + 5, eyeSize, eyeSize);
+    } else if (directionRef.current === 'DOWN') {
+      ctx.fillRect(head.x * CELL_SIZE + 5, head.y * CELL_SIZE + CELL_SIZE - 8, eyeSize, eyeSize);
+      ctx.fillRect(head.x * CELL_SIZE + CELL_SIZE - 8, head.y * CELL_SIZE + CELL_SIZE - 8, eyeSize, eyeSize);
+    } else if (directionRef.current === 'LEFT') {
+      ctx.fillRect(head.x * CELL_SIZE + 5, head.y * CELL_SIZE + 5, eyeSize, eyeSize);
+      ctx.fillRect(head.x * CELL_SIZE + 5, head.y * CELL_SIZE + CELL_SIZE - 8, eyeSize, eyeSize);
+    } else {
+      ctx.fillRect(head.x * CELL_SIZE + CELL_SIZE - 8, head.y * CELL_SIZE + 5, eyeSize, eyeSize);
+      ctx.fillRect(head.x * CELL_SIZE + CELL_SIZE - 8, head.y * CELL_SIZE + CELL_SIZE - 8, eyeSize, eyeSize);
+    }
+    
+    // Draw food with pulsing effect
+    const food = foodRef.current;
+    const time = Date.now();
+    const pulse = 1 + Math.sin(time / 200) * 0.1;
+    const foodSize = CELL_SIZE * 0.7 * pulse;
+    const foodX = food.x * CELL_SIZE + (CELL_SIZE - foodSize) / 2;
+    const foodY = food.y * CELL_SIZE + (CELL_SIZE - foodSize) / 2;
+    
+    ctx.fillStyle = '#ff5e5b'; // Red food
+    ctx.beginPath();
+    ctx.arc(
+      foodX + foodSize / 2,
+      foodY + foodSize / 2,
+      foodSize / 2,
+      0,
+      Math.PI * 2
+    );
+    ctx.fill();
+    
+    // Add shine to food
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+    ctx.beginPath();
+    ctx.arc(
+      foodX + foodSize / 4,
+      foodY + foodSize / 4,
+      foodSize / 6,
+      0,
+      Math.PI * 2
+    );
+    ctx.fill();
+  }, []);
+
+  // Update game state
+  const update = useCallback(() => {
+    if (gameOver || isPaused) return;
+    
+    const snake = [...snakeRef.current];
+    const head = { ...snake[0] };
+    const food = foodRef.current;
+    const direction = directionRef.current;
+    
+    // Update head position based on direction
+    switch (direction) {
+      case 'UP':
+        head.y -= 1;
+        break;
+      case 'DOWN':
+        head.y += 1;
+        break;
+      case 'LEFT':
+        head.x -= 1;
+        break;
+      case 'RIGHT':
+        head.x += 1;
+        break;
+    }
+    
+    // Check for collisions with walls
+    if (head.x < 0 || head.x >= GRID_SIZE || head.y < 0 || head.y >= GRID_SIZE) {
+      handleGameOver();
+      return;
+    }
+    
+    // Check for collisions with self
+    for (let i = 0; i < snake.length; i++) {
+      if (head.x === snake[i].x && head.y === snake[i].y) {
+        handleGameOver();
         return;
       }
-      
-      if (isPaused || gameOver) return;
-      
-      switch (e.code) {
-        case 'ArrowUp':
-          if (directionRef.current !== Direction.DOWN) {
-            setDirection(Direction.UP);
-          }
-          break;
-        case 'ArrowDown':
-          if (directionRef.current !== Direction.UP) {
-            setDirection(Direction.DOWN);
-          }
-          break;
-        case 'ArrowLeft':
-          if (directionRef.current !== Direction.RIGHT) {
-            setDirection(Direction.LEFT);
-          }
-          break;
-        case 'ArrowRight':
-          if (directionRef.current !== Direction.LEFT) {
-            setDirection(Direction.RIGHT);
-          }
-          break;
-        case 'KeyP':
-          setIsPaused(prev => !prev);
-          break;
-        default:
-          break;
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [gameStarted, gameOver, isPaused]);
-
-  // Set game speed based on difficulty
-  useEffect(() => {
-    switch (difficulty) {
-      case 'Easy':
-        setGameSpeed(180);
-        break;
-      case 'Medium':
-        setGameSpeed(120);
-        break;
-      case 'Hard':
-        setGameSpeed(80);
-        break;
     }
-  }, [difficulty]);
-
-  // Initialize game
-  const initializeGame = () => {
-    // Create empty grid
-    const newGrid: Cell[][] = [];
-    for (let y = 0; y < GRID_SIZE; y++) {
-      const row: Cell[] = [];
-      for (let x = 0; x < GRID_SIZE; x++) {
-        row.push({
-          type: CellType.EMPTY,
-          x,
-          y,
-        });
-      }
-      newGrid.push(row);
-    }
-
-    // Create initial snake in the middle
-    const startX = Math.floor(GRID_SIZE / 2);
-    const startY = Math.floor(GRID_SIZE / 2);
     
-    const newSnake: SnakeSegment[] = [];
-    for (let i = 0; i < INITIAL_SNAKE_LENGTH; i++) {
-      newSnake.push({ x: startX - i, y: startY });
+    // Add new head to snake
+    snake.unshift(head);
+    
+    // Check if snake ate food
+    if (head.x === food.x && head.y === food.y) {
+      setScore(prevScore => {
+        const newScore = prevScore + 1;
+        
+        // Update high score if needed
+        if (newScore > highScore) {
+          setHighScore(newScore);
+          localStorage.setItem('snakeHighScore', newScore.toString());
+        }
+        
+        // Speed up the game slightly
+        speedRef.current = Math.max(50, INITIAL_SPEED - Math.floor(newScore / 5) * 10);
+        
+        return newScore;
+      });
+      
+      // Generate new food
+      generateFood();
+    } else {
+      // Remove tail if snake didn't eat
+      snake.pop();
     }
+    
+    // Update snake state
+    snakeRef.current = snake;
+  }, [gameOver, isPaused, highScore, generateFood]);
 
-    // Set snake on the grid
-    newSnake.forEach((segment, index) => {
-      if (segment.y >= 0 && segment.y < GRID_SIZE && segment.x >= 0 && segment.x < GRID_SIZE) {
-        newGrid[segment.y][segment.x].type = index === 0 ? CellType.HEAD : CellType.SNAKE;
-      }
+  // Handle game over
+  function handleGameOver() {
+    setGameOver(true);
+    if (gameLoopRef.current) {
+      cancelAnimationFrame(gameLoopRef.current);
+      gameLoopRef.current = null;
+    }
+    
+    toast({
+      title: "Game Over!",
+      description: `You scored ${score} points.`,
+      variant: "destructive"
     });
+  }
 
-    setSnake(newSnake);
-    setGrid(newGrid);
-    setDirection(Direction.RIGHT);
-    setFoodPosition(null);
-  };
+  // Game loop
+  const gameLoop = useCallback(() => {
+    update();
+    draw();
+    
+    // Schedule next frame
+    gameLoopRef.current = requestAnimationFrame(() => {
+      setTimeout(gameLoop, speedRef.current);
+    });
+  }, [update, draw]);
 
   // Start game
-  const startGame = () => {
-    setGameOver(false);
+  const startGame = useCallback(() => {
+    if (gameLoopRef.current) {
+      cancelAnimationFrame(gameLoopRef.current);
+    }
+    
+    // Reset game state
+    snakeRef.current = [
+      { x: 10, y: 10 },
+      { x: 9, y: 10 },
+      { x: 8, y: 10 }
+    ];
+    directionRef.current = 'RIGHT';
+    speedRef.current = INITIAL_SPEED;
     setScore(0);
+    setGameOver(false);
     setIsPaused(false);
-    initializeGame();
-    setGameStarted(true);
     generateFood();
-  };
-
-  // Generate food in a random empty cell
-  const generateFood = () => {
-    const emptyCells: { x: number; y: number }[] = [];
     
-    grid.forEach(row => {
-      row.forEach(cell => {
-        if (cell.type === CellType.EMPTY) {
-          emptyCells.push({ x: cell.x, y: cell.y });
-        }
-      });
+    // Start game loop
+    gameLoopRef.current = requestAnimationFrame(() => {
+      setTimeout(gameLoop, speedRef.current);
     });
     
-    if (emptyCells.length > 0) {
-      const randomIndex = Math.floor(Math.random() * emptyCells.length);
-      const newFoodPosition = emptyCells[randomIndex];
-      setFoodPosition(newFoodPosition);
-      
-      const newGrid = [...grid];
-      newGrid[newFoodPosition.y][newFoodPosition.x].type = CellType.FOOD;
-      setGrid(newGrid);
-    } else {
-      // No empty cells, you've won!
-      gameWon();
-    }
-  };
-
-  // End game
-  const endGame = () => {
-    gameOverRef.current = true;
-    setGameOver(true);
-    setGameStarted(false);
-    
-    if (score > highScore) {
-      setHighScore(score);
-      localStorage.setItem('snakeHighScore', score.toString());
-      toast({
-        title: "New High Score!",
-        description: `You've set a new record: ${score}`,
-      });
-    } else {
-      toast({
-        title: "Game Over",
-        description: `Your score: ${score}`,
-      });
-    }
-  };
-
-  // Win the game (filled the grid)
-  const gameWon = () => {
-    setGameOver(true);
-    setGameStarted(false);
     toast({
-      title: "Congratulations!",
-      description: "You've filled the entire grid! Amazing!",
+      title: "Game Started!",
+      description: "Use arrow keys or touch controls to move the snake.",
+    });
+  }, [gameLoop, generateFood, toast]);
+
+  // Pause/resume game
+  const togglePause = () => {
+    setIsPaused(prev => {
+      if (!prev) {
+        toast({
+          title: "Game Paused",
+          description: "Press play to resume.",
+        });
+      }
+      return !prev;
     });
   };
 
-  // Move the snake
-  useEffect(() => {
-    if (!gameStarted || gameOver || isPaused) return;
+  // Handle keyboard input
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (gameOver) return;
     
-    const gameLoop = setTimeout(() => {
-      moveSnake();
-    }, gameSpeed);
+    const direction = directionRef.current;
+    
+    switch (e.key) {
+      case 'ArrowUp':
+        if (direction !== 'DOWN') directionRef.current = 'UP';
+        break;
+      case 'ArrowDown':
+        if (direction !== 'UP') directionRef.current = 'DOWN';
+        break;
+      case 'ArrowLeft':
+        if (direction !== 'RIGHT') directionRef.current = 'LEFT';
+        break;
+      case 'ArrowRight':
+        if (direction !== 'LEFT') directionRef.current = 'RIGHT';
+        break;
+      case ' ':
+        togglePause();
+        break;
+    }
+  }, [gameOver]);
+
+  // Handle direction control buttons
+  const handleDirectionButton = (direction: Direction) => {
+    if (gameOver || isPaused) return;
+    
+    const currentDirection = directionRef.current;
+    
+    // Prevent moving in opposite direction
+    if (
+      (direction === 'UP' && currentDirection !== 'DOWN') ||
+      (direction === 'DOWN' && currentDirection !== 'UP') ||
+      (direction === 'LEFT' && currentDirection !== 'RIGHT') ||
+      (direction === 'RIGHT' && currentDirection !== 'LEFT')
+    ) {
+      directionRef.current = direction;
+    }
+  };
+
+  // Set up event listeners
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
     
     return () => {
-      clearTimeout(gameLoop);
-    };
-  }, [snake, gameStarted, gameOver, isPaused, gameSpeed]);
-
-  // Handle snake movement
-  const moveSnake = () => {
-    if (gameOverRef.current || isPausedRef.current) return;
-    
-    // Get the head and calculate new head position
-    const head = { ...snake[0] };
-    let newHead: SnakeSegment;
-    
-    switch (directionRef.current) {
-      case Direction.UP:
-        newHead = { x: head.x, y: head.y - 1 };
-        break;
-      case Direction.DOWN:
-        newHead = { x: head.x, y: head.y + 1 };
-        break;
-      case Direction.LEFT:
-        newHead = { x: head.x - 1, y: head.y };
-        break;
-      case Direction.RIGHT:
-        newHead = { x: head.x + 1, y: head.y };
-        break;
-      default:
-        newHead = { x: head.x, y: head.y };
-    }
-    
-    // Check if the snake hits the wall
-    if (
-      newHead.x < 0 ||
-      newHead.x >= GRID_SIZE ||
-      newHead.y < 0 ||
-      newHead.y >= GRID_SIZE
-    ) {
-      endGame();
-      return;
-    }
-    
-    // Check if snake hits itself
-    if (snake.some(segment => segment.x === newHead.x && segment.y === newHead.y)) {
-      endGame();
-      return;
-    }
-    
-    // Create new snake array
-    const newSnake = [newHead, ...snake];
-    
-    // Check if snake eats food
-    const eatsFood = foodPosition && newHead.x === foodPosition.x && newHead.y === foodPosition.y;
-    
-    if (!eatsFood) {
-      // Remove tail if no food was eaten
-      newSnake.pop();
-    } else {
-      // Increment score and generate new food
-      setScore(prev => prev + 1);
-      generateFood();
-    }
-    
-    // Update grid
-    const newGrid = [...grid].map(row => 
-      row.map(cell => ({ ...cell, type: CellType.EMPTY }))
-    );
-    
-    // Place food on grid
-    if (foodPosition) {
-      newGrid[foodPosition.y][foodPosition.x].type = CellType.FOOD;
-    }
-    
-    // Place snake on grid
-    newSnake.forEach((segment, index) => {
-      if (segment.y >= 0 && segment.y < GRID_SIZE && segment.x >= 0 && segment.x < GRID_SIZE) {
-        newGrid[segment.y][segment.x].type = index === 0 ? CellType.HEAD : CellType.SNAKE;
+      window.removeEventListener('keydown', handleKeyDown);
+      if (gameLoopRef.current) {
+        cancelAnimationFrame(gameLoopRef.current);
       }
-    });
-    
-    setSnake(newSnake);
-    setGrid(newGrid);
-  };
+    };
+  }, [handleKeyDown]);
 
-  // Handle touch events for mobile controls
-  const handleSwipe = (direction: Direction) => {
-    if (isPaused || gameOver) return;
+  // Start game on first render
+  useEffect(() => {
+    startGame();
     
-    switch (direction) {
-      case Direction.UP:
-        if (directionRef.current !== Direction.DOWN) {
-          setDirection(Direction.UP);
-        }
-        break;
-      case Direction.DOWN:
-        if (directionRef.current !== Direction.UP) {
-          setDirection(Direction.DOWN);
-        }
-        break;
-      case Direction.LEFT:
-        if (directionRef.current !== Direction.RIGHT) {
-          setDirection(Direction.LEFT);
-        }
-        break;
-      case Direction.RIGHT:
-        if (directionRef.current !== Direction.LEFT) {
-          setDirection(Direction.RIGHT);
-        }
-        break;
-    }
-  };
-  
-  // Get cell styles based on the cell type
-  const getCellStyle = (type: CellType) => {
-    switch (type) {
-      case CellType.EMPTY:
-        return 'bg-card/20';
-      case CellType.SNAKE:
-        return 'bg-green-500';
-      case CellType.HEAD:
-        return 'bg-green-700';
-      case CellType.FOOD:
-        return 'bg-red-500';
-    }
-  };
+    // Clean up on unmount
+    return () => {
+      if (gameLoopRef.current) {
+        cancelAnimationFrame(gameLoopRef.current);
+      }
+    };
+  }, [startGame]);
+
+  // Resize canvas to fit container
+  useEffect(() => {
+    const updateCanvasSize = () => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      
+      // For mobile, make the canvas smaller to fit on screen
+      if (isMobile) {
+        const containerSize = Math.min(window.innerWidth - 40, 320);
+        canvas.width = containerSize;
+        canvas.height = containerSize;
+        canvas.style.width = `${containerSize}px`;
+        canvas.style.height = `${containerSize}px`;
+      } else {
+        canvas.width = GRID_WIDTH;
+        canvas.height = GRID_HEIGHT;
+        canvas.style.width = `${GRID_WIDTH}px`;
+        canvas.style.height = `${GRID_HEIGHT}px`;
+      }
+    };
+    
+    updateCanvasSize();
+    window.addEventListener('resize', updateCanvasSize);
+    
+    return () => window.removeEventListener('resize', updateCanvasSize);
+  }, [isMobile]);
 
   return (
-    <div className="min-h-screen py-20 px-4 flex flex-col items-center">
-      <div className="flex flex-col items-center w-full max-w-lg">
-        <Link
-          to="/"
-          className="self-start flex items-center text-muted-foreground hover:text-white transition-all group mb-6"
-        >
-          <ArrowLeft className="h-4 w-4 mr-1 group-hover:-translate-x-1 transition-transform" />
-          Back to Home
-        </Link>
-        
-        <h1 className="text-4xl md:text-5xl font-serif mb-6">
-          <span className="text-gradient-primary">Snake Game</span>
-        </h1>
-        
-        <div className="flex items-center justify-between w-full mb-6">
-          <Card className="p-4 bg-card/50 backdrop-blur-sm">
-            <p className="text-muted-foreground">Score</p>
-            <p className="text-2xl font-bold">{score}</p>
-          </Card>
-          
-          <Card className="p-4 bg-card/50 backdrop-blur-sm">
-            <p className="text-muted-foreground">High Score</p>
-            <p className="text-2xl font-bold">{highScore}</p>
-          </Card>
+    <GameLayout
+      title="Snake Game"
+      description="The classic Nokia Snake game. Eat food to grow longer, but don't hit the walls or yourself!"
+      instructions="Use arrow keys on desktop or the touch controls on mobile to change direction. Collect as many red dots as possible without crashing."
+      controls={{
+        desktop: (
+          <p className="text-muted-foreground">
+            <span className="font-medium">Arrow keys</span>: Change direction<br />
+            <span className="font-medium">Spacebar</span>: Pause/Resume
+          </p>
+        ),
+        mobile: (
+          <p className="text-muted-foreground">
+            Use the direction buttons below the game to control the snake.
+          </p>
+        )
+      }}
+    >
+      <div className="flex flex-col items-center">
+        {/* Score display */}
+        <div className="flex justify-between w-full max-w-sm mb-4">
+          <div className="text-muted-foreground">
+            <span className="font-medium">Score:</span> {score}
+          </div>
+          <div className="text-muted-foreground">
+            <span className="font-medium">High Score:</span> {highScore}
+          </div>
         </div>
         
-        {/* Difficulty selector */}
-        {(!gameStarted || gameOver) && (
-          <div className="flex justify-center w-full mb-4">
-            <div className="flex gap-2">
-              <Button 
-                onClick={() => setDifficulty('Easy')} 
-                className={`${difficulty === 'Easy' ? 'bg-primary' : 'bg-primary/30'}`}
-              >
-                Easy
-              </Button>
-              <Button 
-                onClick={() => setDifficulty('Medium')} 
-                className={`${difficulty === 'Medium' ? 'bg-primary' : 'bg-primary/30'}`}
-              >
-                Medium
-              </Button>
-              <Button 
-                onClick={() => setDifficulty('Hard')} 
-                className={`${difficulty === 'Hard' ? 'bg-primary' : 'bg-primary/30'}`}
-              >
-                Hard
-              </Button>
-            </div>
-          </div>
-        )}
-        
-        {/* Game grid */}
-        <div className="relative border border-white/20 rounded-lg overflow-hidden mb-6">
-          <div 
-            className="grid bg-black/20 backdrop-blur-sm w-full aspect-square"
-            style={{ 
-              gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)`,
-              gridTemplateRows: `repeat(${GRID_SIZE}, 1fr)`,
-              maxWidth: '500px',
-              minWidth: '300px'
-            }}
-          >
-            {grid.map((row, y) =>
-              row.map((cell, x) => (
-                <div
-                  key={`${x}-${y}`}
-                  className={`${getCellStyle(cell.type)} border-[0.5px] border-gray-800/20`}
-                ></div>
-              ))
-            )}
-          </div>
+        {/* Game canvas */}
+        <div className={`relative ${isMobile ? 'max-w-[320px]' : ''} mx-auto rounded-lg overflow-hidden border-2 border-white/10`}>
+          <canvas
+            ref={canvasRef}
+            width={GRID_WIDTH}
+            height={GRID_HEIGHT}
+            className={`bg-black/30 ${gameOver ? 'opacity-50' : ''}`}
+          />
           
-          {!gameStarted && !gameOver && (
-            <div className="absolute inset-0 flex items-center justify-center flex-col bg-black/40">
-              <p className="text-xl mb-4">Press Space or tap to start</p>
-              <Button onClick={startGame} className="bg-accent hover:bg-accent/90">
-                Start Game
-              </Button>
-            </div>
-          )}
-          
+          {/* Game over overlay */}
           {gameOver && (
-            <div className="absolute inset-0 flex items-center justify-center flex-col bg-black/40">
-              <p className="text-xl mb-2">Game Over</p>
-              <p className="mb-4">Score: {score}</p>
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70">
+              <h3 className="text-2xl font-bold mb-2">Game Over!</h3>
+              <p className="mb-4 text-muted-foreground">
+                Your score: {score}
+              </p>
               <Button onClick={startGame} className="bg-accent hover:bg-accent/90">
                 Play Again
               </Button>
             </div>
           )}
           
-          {isPaused && (
-            <div className="absolute inset-0 flex items-center justify-center flex-col bg-black/40">
-              <p className="text-xl mb-4">Game Paused</p>
-              <Button onClick={() => setIsPaused(false)} className="bg-accent hover:bg-accent/90">
-                Resume
-              </Button>
+          {/* Pause overlay */}
+          {isPaused && !gameOver && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/70">
+              <h3 className="text-2xl font-bold">Paused</h3>
             </div>
           )}
         </div>
         
-        {/* Mobile controls */}
-        <div className="md:hidden w-full mb-4">
-          <div className="flex justify-center mb-2">
-            <Button 
-              onClick={() => handleSwipe(Direction.UP)} 
-              className="w-16 h-16 text-xl p-1"
-              disabled={!gameStarted || isPaused || gameOver}
-            >
-              ↑
-            </Button>
-          </div>
-          <div className="flex justify-center">
-            <Button 
-              onClick={() => handleSwipe(Direction.LEFT)} 
-              className="w-16 h-16 text-xl p-1 mr-4"
-              disabled={!gameStarted || isPaused || gameOver}
-            >
-              ←
-            </Button>
-            <Button 
-              onClick={() => handleSwipe(Direction.DOWN)} 
-              className="w-16 h-16 text-xl p-1"
-              disabled={!gameStarted || isPaused || gameOver}
-            >
-              ↓
-            </Button>
-            <Button 
-              onClick={() => handleSwipe(Direction.RIGHT)} 
-              className="w-16 h-16 text-xl p-1 ml-4"
-              disabled={!gameStarted || isPaused || gameOver}
-            >
-              →
-            </Button>
-          </div>
-        </div>
-        
         {/* Game controls */}
-        <div className="mt-4 text-center">
-          <p className="text-sm text-muted-foreground">
-            Use arrow keys to control the snake. Press P or Space to pause.
-          </p>
+        <div className="mt-6 flex flex-col items-center gap-2">
+          {/* Mobile direction controls */}
+          <div className="md:hidden grid grid-cols-3 gap-2 mb-4">
+            <div className="col-span-1"></div>
+            <Button
+              variant="outline"
+              className="col-span-1 aspect-square p-0"
+              onClick={() => handleDirectionButton('UP')}
+            >
+              <ArrowUp className="h-5 w-5" />
+            </Button>
+            <div className="col-span-1"></div>
+            
+            <Button
+              variant="outline"
+              className="col-span-1 aspect-square p-0"
+              onClick={() => handleDirectionButton('LEFT')}
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div className="col-span-1"></div>
+            <Button
+              variant="outline"
+              className="col-span-1 aspect-square p-0"
+              onClick={() => handleDirectionButton('RIGHT')}
+            >
+              <ArrowRight className="h-5 w-5" />
+            </Button>
+            
+            <div className="col-span-1"></div>
+            <Button
+              variant="outline"
+              className="col-span-1 aspect-square p-0"
+              onClick={() => handleDirectionButton('DOWN')}
+            >
+              <ArrowDown className="h-5 w-5" />
+            </Button>
+            <div className="col-span-1"></div>
+          </div>
           
-          <div className="mt-4 flex gap-2 justify-center flex-wrap">
-            {!gameStarted || gameOver ? (
-              <Button onClick={startGame} className="bg-accent hover:bg-accent/90">
-                {gameOver ? "Play Again" : "Start Game"}
-              </Button>
-            ) : (
-              <>
-                <Button 
-                  onClick={() => setIsPaused(!isPaused)} 
-                  className="bg-primary/20 hover:bg-primary/30"
-                >
-                  {isPaused ? "Resume" : "Pause"}
-                </Button>
-                <Button 
-                  onClick={() => endGame()} 
-                  className="bg-destructive/20 hover:bg-destructive/30"
-                >
-                  End Game
-                </Button>
-              </>
-            )}
+          {/* Game action buttons */}
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              className="px-6"
+              onClick={togglePause}
+              disabled={gameOver}
+            >
+              {isPaused ? <Play className="mr-2 h-4 w-4" /> : <Pause className="mr-2 h-4 w-4" />}
+              {isPaused ? 'Resume' : 'Pause'}
+            </Button>
+            <Button
+              variant="outline"
+              className="px-6"
+              onClick={startGame}
+            >
+              <RotateCcw className="mr-2 h-4 w-4" />
+              Restart
+            </Button>
           </div>
         </div>
       </div>
-    </div>
+    </GameLayout>
   );
 };
 
