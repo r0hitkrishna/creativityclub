@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import MagicParticles from "./components/MagicParticles";
+import FluidCursor from "./components/FluidCursor";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Events from "./pages/Events";
@@ -19,6 +20,7 @@ import NotFound from "./pages/NotFound";
 import Gallery from "./pages/Gallery";
 import Game2048 from "./pages/Game2048";
 import DinoGame from "./pages/DinoGame";
+import SnakeGame from "./pages/SnakeGame";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +30,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <MagicParticles />
+      <FluidCursor />
       <BrowserRouter>
         <Navbar />
         <main className="pt-20">
@@ -43,6 +46,7 @@ const App = () => (
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/games/2048" element={<Game2048 />} />
             <Route path="/games/dino" element={<DinoGame />} />
+            <Route path="/games/snake" element={<SnakeGame />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

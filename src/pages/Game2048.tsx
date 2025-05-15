@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { toast } from '@/hooks/use-toast';
 
 const Game2048 = () => {
   const [grid, setGrid] = useState<number[][]>([]);
@@ -77,11 +78,16 @@ const Game2048 = () => {
   };
 
   const moveLeft = () => {
-    let newGrid = grid.map(row => [...row]);
+    // Create a deep copy of the grid
+    let newGrid = JSON.parse(JSON.stringify(grid));
     let changed = false;
     let newScore = score;
 
     for (let i = 0; i < 4; i++) {
+      // Skip empty rows
+      if (!newGrid[i]) continue;
+      
+      // Filter out zeros
       const row = newGrid[i].filter(val => val !== 0);
       
       // Merge tiles
@@ -118,11 +124,16 @@ const Game2048 = () => {
   };
 
   const moveRight = () => {
-    let newGrid = grid.map(row => [...row]);
+    // Create a deep copy of the grid
+    let newGrid = JSON.parse(JSON.stringify(grid));
     let changed = false;
     let newScore = score;
 
     for (let i = 0; i < 4; i++) {
+      // Skip empty rows
+      if (!newGrid[i]) continue;
+      
+      // Filter out zeros
       const row = newGrid[i].filter(val => val !== 0);
       
       // Reverse, merge, then reverse back
@@ -162,11 +173,16 @@ const Game2048 = () => {
   };
 
   const moveUp = () => {
+    // Create a deep copy of the grid
+    let newGrid = JSON.parse(JSON.stringify(grid));
+    
     // Transpose the grid
-    let newGrid = Array(4).fill(null).map(() => Array(4).fill(0));
+    let transposed = Array(4).fill(null).map(() => Array(4).fill(0));
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 4; j++) {
-        newGrid[i][j] = grid[j][i];
+        if (newGrid[j] && newGrid[j][i] !== undefined) {
+          transposed[i][j] = newGrid[j][i];
+        }
       }
     }
     
@@ -175,7 +191,8 @@ const Game2048 = () => {
 
     // Process each column as a row
     for (let i = 0; i < 4; i++) {
-      const row = newGrid[i].filter(val => val !== 0);
+      // Filter out zeros
+      const row = transposed[i].filter(val => val !== 0);
       
       for (let j = 0; j < row.length - 1; j++) {
         if (row[j] === row[j + 1]) {
@@ -193,18 +210,18 @@ const Game2048 = () => {
         filteredRow.push(0);
       }
       
-      if (JSON.stringify(newGrid[i]) !== JSON.stringify(filteredRow)) {
+      if (JSON.stringify(transposed[i]) !== JSON.stringify(filteredRow)) {
         changed = true;
       }
       
-      newGrid[i] = filteredRow;
+      transposed[i] = filteredRow;
     }
     
     // Transpose back
     let finalGrid = Array(4).fill(null).map(() => Array(4).fill(0));
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 4; j++) {
-        finalGrid[i][j] = newGrid[j][i];
+        finalGrid[i][j] = transposed[j][i];
       }
     }
     
@@ -217,11 +234,16 @@ const Game2048 = () => {
   };
 
   const moveDown = () => {
+    // Create a deep copy of the grid
+    let newGrid = JSON.parse(JSON.stringify(grid));
+    
     // Transpose the grid
-    let newGrid = Array(4).fill(null).map(() => Array(4).fill(0));
+    let transposed = Array(4).fill(null).map(() => Array(4).fill(0));
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 4; j++) {
-        newGrid[i][j] = grid[j][i];
+        if (newGrid[j] && newGrid[j][i] !== undefined) {
+          transposed[i][j] = newGrid[j][i];
+        }
       }
     }
     
@@ -230,7 +252,8 @@ const Game2048 = () => {
 
     // Process each column as a row (reversed)
     for (let i = 0; i < 4; i++) {
-      const row = newGrid[i].filter(val => val !== 0);
+      // Filter out zeros
+      const row = transposed[i].filter(val => val !== 0);
       
       row.reverse();
       
@@ -252,18 +275,18 @@ const Game2048 = () => {
       
       filteredRow.reverse();
       
-      if (JSON.stringify(newGrid[i]) !== JSON.stringify(filteredRow)) {
+      if (JSON.stringify(transposed[i]) !== JSON.stringify(filteredRow)) {
         changed = true;
       }
       
-      newGrid[i] = filteredRow;
+      transposed[i] = filteredRow;
     }
     
     // Transpose back
     let finalGrid = Array(4).fill(null).map(() => Array(4).fill(0));
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 4; j++) {
-        finalGrid[i][j] = newGrid[j][i];
+        finalGrid[i][j] = transposed[j][i];
       }
     }
     
@@ -297,6 +320,10 @@ const Game2048 = () => {
     }
     
     setGameOver(true);
+    toast({
+      title: "Game Over",
+      description: `Your score: ${score}`,
+    });
   };
 
   // Function to get background color based on tile value
@@ -320,6 +347,45 @@ const Game2048 = () => {
   // Function to get text color based on tile value
   const getTextColor = (value: number): string => {
     return value <= 4 ? 'text-gray-800' : 'text-white';
+  };
+
+  // Handle touch events for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touchStartX = e.touches[0].clientX;
+    const touchStartY = e.touches[0].clientY;
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      const touchEndX = e.changedTouches[0].clientX;
+      const touchEndY = e.changedTouches[0].clientY;
+
+      const dx = touchEndX - touchStartX;
+      const dy = touchEndY - touchStartY;
+      const absDx = Math.abs(dx);
+      const absDy = Math.abs(dy);
+
+      // Determine swipe direction if it's a substantial movement (over 30px)
+      if (Math.max(absDx, absDy) > 30) {
+        if (absDx > absDy) {
+          // Horizontal swipe
+          if (dx > 0) {
+            moveRight();
+          } else {
+            moveLeft();
+          }
+        } else {
+          // Vertical swipe
+          if (dy > 0) {
+            moveDown();
+          } else {
+            moveUp();
+          }
+        }
+      }
+
+      document.removeEventListener('touchend', handleTouchEnd);
+    };
+
+    document.addEventListener('touchend', handleTouchEnd);
   };
 
   return (
@@ -358,8 +424,11 @@ const Game2048 = () => {
           </div>
         )}
         
-        {/* Game grid */}
-        <div className="grid grid-cols-4 gap-2 bg-[#bbada0] p-2 rounded-lg w-full aspect-square">
+        {/* Game grid with touch support */}
+        <div 
+          className="grid grid-cols-4 gap-2 bg-[#bbada0] p-2 rounded-lg w-full aspect-square"
+          onTouchStart={handleTouchStart}
+        >
           {grid.map((row, i) =>
             row.map((cell, j) => (
               <div
@@ -379,7 +448,18 @@ const Game2048 = () => {
         </div>
         
         <div className="mt-6 text-sm text-muted-foreground text-center">
-          <p>Use arrow keys to play. Combine identical tiles to reach 2048!</p>
+          <p className="mb-2">Use arrow keys to play, or swipe on mobile. Combine identical tiles to reach 2048!</p>
+          <div className="mt-2 grid grid-cols-3 gap-1 md:hidden">
+            <div></div>
+            <Button onClick={moveUp} className="p-1 h-10 aspect-square">↑</Button>
+            <div></div>
+            <Button onClick={moveLeft} className="p-1 h-10 aspect-square">←</Button>
+            <div></div>
+            <Button onClick={moveRight} className="p-1 h-10 aspect-square">→</Button>
+            <div></div>
+            <Button onClick={moveDown} className="p-1 h-10 aspect-square">↓</Button>
+            <div></div>
+          </div>
           <p className="mt-2">
             This is a clone of the original{" "}
             <a

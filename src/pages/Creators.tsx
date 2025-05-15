@@ -1,8 +1,9 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react"; // Assuming ArrowLeft is still used for navigation
+import { ArrowLeft, Linkedin, Instagram, Dribbble } from "lucide-react";
 
 // Interface for Creator Profile properties
 interface CreatorProps {
@@ -24,70 +25,50 @@ const CreatorProfile = ({ name, role, image, bio, linkedin, instagram, dribbble 
     .join("");
 
   return (
-    // Card styling with magical-card class (assuming custom styling) and hover effects
-    <Card className="magical-card transform transition-all duration-500 hover:scale-105 rounded-lg shadow-lg">
-      <CardContent className="p-6">
-        <div className="flex flex-col items-center text-center">
-          <div className="mb-4 relative">
-            {/* Background effect for the avatar */}
-            <div className="absolute inset-0 bg-gradient-to-r from-magic-purple via-magic-teal to-magic-gold opacity-50 rounded-full blur-sm"></div>
-            {/* HoverCard for displaying bio on hover */}
-            <HoverCard>
-              <HoverCardTrigger asChild>
-                {/* Avatar component - square shape */}
-                <Avatar className="h-36 w-36 border-2 border-white/10">
-                  {image ? (
-                    // Display image if available
-                    // object-cover ensures the image fills the square space while maintaining aspect ratio
-                    <AvatarImage src={image} alt={name} className="object-cover" />
-                  ) : (
-                    // Display initials as fallback
-                    <AvatarFallback className="bg-primary/20 text-primary text-lg flex items-center justify-center">
-                      {initials}
-                    </AvatarFallback>
-                  )}
-                </Avatar>
-              </HoverCardTrigger>
-              {/* Content displayed on hover */}
-              <HoverCardContent className="w-80 rounded-md bg-card/90 backdrop-blur-sm border-white/10 shadow-lg">
-                <div className="space-y-2">
-                  <h4 className="text-sm font-semibold">{name}</h4>
-                  <p className="text-sm text-muted-foreground">{bio}</p>
-                </div>
-              </HoverCardContent>
-            </HoverCard>
+    <Card className="group hover:scale-[1.02] transition-all duration-300 rounded-lg shadow-lg overflow-hidden">
+      <CardContent className="p-0">
+        {/* Top portion with image and overlay */}
+        <div className="relative aspect-square overflow-hidden">
+          {/* Background gradient for the image */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/70 z-10"></div>
+          
+          {/* Creator image */}
+          {image ? (
+            <img 
+              src={image} 
+              alt={name} 
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-magic-purple to-magic-teal flex items-center justify-center">
+              <span className="text-4xl font-bold text-white">{initials}</span>
+            </div>
+          )}
+          
+          {/* Info overlay that appears on hover */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 z-20 transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+            <h3 className="text-xl font-serif mb-1 text-white">{name}</h3>
+            <p className="text-accent/90 font-medium">{role}</p>
           </div>
-
-          {/* Creator Name and Role */}
-          <h3 className="text-xl font-serif mb-1">{name}</h3>
-          <p className="text-accent mb-4">{role}</p>
-
+        </div>
+        
+        {/* Bottom portion with bio and links */}
+        <div className="p-5">
+          {/* Bio text */}
+          <p className="text-sm text-muted-foreground line-clamp-3 mb-4 h-[60px]">{bio}</p>
+          
           {/* Social Media Links */}
-          <div className="flex justify-center gap-4 mt-4">
+          <div className="flex justify-center gap-3 mt-auto">
             {/* LinkedIn Link */}
             {linkedin && (
               <a
                 href={linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-3 py-1 text-sm rounded-md bg-white/10 hover:bg-white/20 transition-all text-muted-foreground hover:text-white"
+                className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-all text-muted-foreground hover:text-white"
                 aria-label={`${name} on LinkedIn`}
               >
-                {/* LinkedIn Icon SVG */}
-                <svg
-                  className="w-4 h-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                  <rect width="4" height="12" x="2" y="9"></rect>
-                  <circle cx="4" cy="4" r="2"></circle>
-                </svg>
+                <Linkedin className="w-4 h-4" />
               </a>
             )}
 
@@ -97,52 +78,23 @@ const CreatorProfile = ({ name, role, image, bio, linkedin, instagram, dribbble 
                 href={instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-3 py-1 text-sm rounded-md bg-white/10 hover:bg-white/20 transition-all text-muted-foreground hover:text-white"
-                 aria-label={`${name} on Instagram`}
+                className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-all text-muted-foreground hover:text-white"
+                aria-label={`${name} on Instagram`}
               >
-                {/* Instagram Icon SVG */}
-                <svg
-                  className="w-4 h-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
-                </svg>
+                <Instagram className="w-4 h-4" />
               </a>
             )}
 
-             {/* Dribbble Link (for Rohit) */}
+            {/* Dribbble Link (for Rohit) */}
             {dribbble && (
                <a
                 href={dribbble}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-3 py-1 text-sm rounded-md bg-white/10 hover:bg-white/20 transition-all text-muted-foreground hover:text-white"
-                 aria-label={`${name} on Dribbble`}
+                className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-all text-muted-foreground hover:text-white"
+                aria-label={`${name} on Dribbble`}
               >
-                {/* Dribbble Icon SVG */}
-                 <svg
-                    className="w-4 h-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                 >
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M19.13 5.09C15.22 9.14 10 10.44 2.25 10.91"></path>
-                    <path d="M21.75 12.84c-6.62 1.41-12.14 1-16.38-1.94"></path>
-                    <path d="M10.75 19.36c3.15-2.08 5.42-5.03 5.42-5.03"></path>
-                 </svg>
+                <Dribbble className="w-4 h-4" />
               </a>
             )}
           </div>
@@ -226,39 +178,48 @@ const Creators = () => {
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-7xl mx-auto">
-        {/* Header section with improved back button positioning */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
-          <h1 className="text-4xl md:text-5xl font-serif mb-4 md:mb-0">
-            <span className="text-gradient-primary">Creators</span>
-          </h1>
-          
+        {/* Header with page title and navigation */}
+        <div className="flex flex-col gap-6 items-center text-center mb-16">
           <Link
             to="/"
-            className="inline-flex items-center px-4 py-2 text-sm rounded-md bg-white/5 hover:bg-white/10 transition-all text-muted-foreground hover:text-white"
+            className="self-center inline-flex items-center px-4 py-2 text-sm rounded-full bg-white/5 hover:bg-white/10 transition-all text-muted-foreground hover:text-white mb-4"
           >
             <ArrowLeft className="h-4 w-4 mr-2 transition-transform group-hover:-translate-x-1" />
             Back to Home
           </Link>
+          
+          <h1 className="text-4xl md:text-5xl font-serif">
+            <span className="text-gradient-primary">Meet Our Creators</span>
+          </h1>
+
+          {/* Introductory paragraph */}
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            The talented individuals who brought the Creativity Club website to life through their collaborative efforts, 
+            innovative thinking, and technical expertise.
+          </p>
         </div>
 
-        {/* Introductory paragraph */}
-        <p className="text-xl text-muted-foreground max-w-3xl">
-          Meet the brilliant minds behind the Creativity Club website — a vibrant digital 
-          space crafted through their creativity, technical expertise, and passion.
-        </p>
-
-        {/* Grid to display creator profiles */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Grid layout for creator profiles */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
           {/* Map through the creators array and render a CreatorProfile for each */}
           {creators.map((creator) => (
             <CreatorProfile key={creator.name} {...creator} />
           ))}
         </div>
+        
+        {/* Acknowledgements section */}
+        <div className="text-center mt-24 mb-8">
+          <h2 className="text-2xl font-serif mb-4">Acknowledgements</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            We extend our gratitude to all contributors, advisors, and supporters who played a role in making this website possible. 
+            Your encouragement and feedback have been invaluable to our creative process.
+          </p>
+        </div>
       </div>
 
-      {/* Sparkling effects */}
-      <div className="sparkling absolute top-1/3 left-1/4"></div>
-      <div className="sparkling absolute bottom-1/4 right-1/3"></div>
+      {/* Decorative elements */}
+      <div className="sparkling absolute top-1/3 left-1/4 opacity-40"></div>
+      <div className="sparkling absolute bottom-1/4 right-1/3 opacity-40"></div>
     </div>
   );
 };

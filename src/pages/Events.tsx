@@ -35,7 +35,7 @@ interface PreviousEventProps {
 }
 
 // Component to display a card for an upcoming event
-const EventCard = ({ title, date, time, description, image, link, category }: EventCardProps) => {
+const EventCard = ({ id, title, date, time, description, image, link, category }: EventCardProps) => {
   return (
     // Card styling for upcoming events with rounded corners and subtle background
     <Card className="overflow-hidden rounded-lg bg-card/50 backdrop-blur-sm border border-white/10 h-full flex flex-col shadow-lg">
@@ -388,7 +388,8 @@ const Events = () => {
                     {/* Map through the proposed events (last 3 upcoming) and display them as cards */}
                     {proposedEvents.map(event => (
                       <EventCard
-                        key={event.id} // Use event id as key
+                        key={event.id}
+                        id={event.id}
                         title={event.title}
                         date={event.date}
                         time={event.time}
