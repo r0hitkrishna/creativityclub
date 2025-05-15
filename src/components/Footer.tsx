@@ -43,6 +43,7 @@ const Footer = () => {
             <li><Link to="/gallery" className="text-muted-foreground hover:text-white transition-colors">Secret Gallery</Link></li>
             <li><Link to="/games/2048" className="text-muted-foreground hover:text-white transition-colors">2048 Game</Link></li>
             <li><Link to="/games/dino" className="text-muted-foreground hover:text-white transition-colors">Dino Game</Link></li>
+            <li><Link to="/games/snake" className="text-muted-foreground hover:text-white transition-colors">Snake Game</Link></li>
           </ul>
         </div>
         
